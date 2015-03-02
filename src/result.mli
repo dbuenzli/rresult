@@ -34,7 +34,7 @@ module R : sig
   val reword_err : ('b -> 'c) -> ('a, 'b) result -> ('a, 'c) result
   (** [reword_err reword r] is:
       {ul
-      {- [v] if [r = `Ok v]}
+      {- [r] if [r = `Ok v]}
       {- [`Error (reword e)] if [r = `Error e]}} *)
 
   val get_ok : ('a, 'b) result -> 'a
