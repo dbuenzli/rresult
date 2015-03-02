@@ -8,11 +8,9 @@ bug-reports: "https://github.com/dbuenzli/result/issues"
 tags: [ "error" "org:erratique" ]
 license: "BSD3"
 available: [ ocaml-version >= "4.01.0"]
-depends: [ "ocamlfind" ]
 build:
 [
   [ "ocaml" "pkg/git.ml" ]
   [ "ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
-                           "native-dynlink=%{ocaml-native-dynlink}%"
- ]
+                           "native-dynlink=%{ocaml-native-dynlink}%"]
 ]
