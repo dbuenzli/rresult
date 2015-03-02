@@ -59,11 +59,11 @@ module R = struct
   let err_msg_ppf = Format.str_formatter
   let kerr _ = `Error (`Msg (Format.flush_str_formatter ()))
   let err_msg fmt = Format.kfprintf kerr err_msg_ppf fmt
-  let reword_err_msg ?(replace = false) r fmt = match r with
-  | `Ok _ as r -> Format.ikfprintf (fun _ -> r) err_msg_ppf fmt
+  let reword_err_msg ?(replace = false) msg = function
+  | `Ok _ as r -> r
   | `Error (`Msg e) ->
-      if replace then Format.kfprintf kerr err_msg_ppf fmt else
-      Format.kfprintf kerr err_msg_ppf ("%s\n" ^^ fmt) e
+      if replace then `Error (`Msg (msg ())) else
+      `Error (`Msg (Format.sprintf "%s\n%s" e (msg ())))
 
   let err_to_err_msg ~pp = function
   | `Ok _ as r -> r
