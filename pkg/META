@@ -6,3 +6,14 @@ archive(byte, plugin) = "result.cma"
 archive(native) = "result.cmxa"
 archive(native, plugin) = "result.cmxs"
 exists_if = "result.cma"
+
+package "top" (
+  description = "Result toplevel support"
+  version = "%%VERSION%%"
+  requires = "compiler-libs.toplevel result"
+  archive(byte) = "result_top.cma"
+  archive(byte, plugin) = "result_top.cma"
+  archive(native) = "result_top.cmxa"
+  archive(native, plugin) = "result_top.cmxs"
+  exists_if = "result_top.cma"        
+)
