@@ -1,0 +1,18 @@
+opam-version: "1.2"
+maintainer: "Daniel Bünzli <daniel.buenzl i@erratique.ch>"
+authors: ["Daniel Bünzli <daniel.buenzl i@erratique.ch>"]
+homepage: "http://erratique.ch/software/result"
+doc: "http://erratique.ch/software/result"
+dev-repo: "http://erratique.ch/repos/result.git"
+bug-reports: "https://github.com/dbuenzli/result/issues"
+tags: [ "error" "org:erratique" ]
+license: "BSD3"
+available: [ ocaml-version >= "4.01.0"]
+depends: [ "ocamlfind" ]
+build:
+[
+  [ "ocaml" "pkg/git.ml" ]
+  [ "ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
+                           "native-dynlink=%{ocaml-native-dynlink}%"
+ ]
+]

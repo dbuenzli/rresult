@@ -1,0 +1,8 @@
+description = "Declarative error handling for OCaml"
+version = "%%VERSION%%"
+
+archive(byte) = "result.cma"
+archive(byte, plugin) = "result.cma"
+archive(native) = "result.cmxa"
+archive(native, plugin) = "result.cmxs"
+exists_if = "result.cma"
