@@ -92,7 +92,7 @@ module R : sig
 
   val err_msg : ('a, Format.formatter, unit, ('b, [> err_msg]) result)
       format4 -> 'a
-  (** [err_msg fmt ...] is an error message formatter according to [fmt]. *)
+  (** [err_msg fmt ...] is an error message formatted according to [fmt]. *)
 
   val reword_err_msg : ?replace:bool ->
     ('a, err_msg) result ->
