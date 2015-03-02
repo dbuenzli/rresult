@@ -56,14 +56,16 @@ module R = struct
   type err_msg = [ `Msg of string ]
   let pp_err_msg ppf (`Msg msg) = pp_lines ppf msg
 
-  let err_msg_ppf = Format.str_formatter
-  let kerr _ = `Error (`Msg (Format.flush_str_formatter ()))
-  let err_msg fmt = Format.kfprintf kerr err_msg_ppf fmt
+  let err_msg fmt =
+    let kerr _ = `Error (`Msg (Format.flush_str_formatter ())) in
+    Format.kfprintf kerr Format.str_formatter fmt
+
+  let msg = Format.asprintf
   let reword_err_msg ?(replace = false) msg = function
   | `Ok _ as r -> r
   | `Error (`Msg e) ->
-      if replace then `Error (`Msg (msg ())) else
-      `Error (`Msg (Format.sprintf "%s\n%s" e (msg ())))
+      if replace then `Error (`Msg (msg e)) else
+      `Error (`Msg (Format.sprintf "%s\n%s" e (msg e)))
 
   let err_to_err_msg ~pp = function
   | `Ok _ as r -> r

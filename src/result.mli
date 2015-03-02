@@ -94,11 +94,21 @@ module R : sig
       format4 -> 'a
   (** [err_msg fmt ...] is an error message formatted according to [fmt]. *)
 
-  val reword_err_msg : ?replace:bool -> (unit -> string)  ->
+  val msg : ('a, Format.formatter, unit, string) format4 -> 'a
+  (** [msg fmt ...] formats a string according to [fmt]. *)
+
+  val reword_err_msg : ?replace:bool -> (string -> string)  ->
     ('a, err_msg) result -> ('a, err_msg) result
-  (** [reword_err msg r] uses [msg ()] for the error message in case
-      of [`Error]. If replace is [false] (default), [msg] is
-      concatenated, on a new line, to the old message. *)
+  (** [reword_err ~replace reword r] is:
+      {ul
+      {- [v] if [r = `Ok v]}
+      {- [`Error (`Msg (reword e))] if [r = `Error (`Msg e)] and
+         [replace = true]}
+      {- [`Error (`Msg (e ^ "\n" ^ (reword e)))] if [r = `Error (`Msg e)]
+         and [replace = false].}}
+
+      If replace is [false] (default), [reword e] is concatenated, on a new
+      line, to the old message. *)
 
   val err_to_err_msg : pp:(Format.formatter -> 'b -> unit) ->
     ('a, 'b) result -> ('a, [> err_msg]) result
