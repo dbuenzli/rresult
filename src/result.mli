@@ -171,8 +171,8 @@ module R : sig
   val ignore_error : use:'a -> ('a, 'b) result -> 'a
   (** [ignore_error ~use r] is [v] if [r = Ok v] and [use] otherwise. *)
 
-  val ignore_errork : use:'a -> ('a, 'b) result -> ('a, 'b) result
-  (** [ignore_errork ~use r] is:
+  val kignore_error : use:'a -> ('a, 'b) result -> ('a, 'b) result
+  (** [kignore_error ~use r] is:
       {ul
       {- [r] if [r = Ok v]}
       {- [Ok use] if [r = Error _].}} *)

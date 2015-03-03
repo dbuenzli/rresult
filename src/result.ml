@@ -110,7 +110,7 @@ module R = struct
   (* Ignoring errors *)
 
   let ignore_error ~use = function Ok v -> v | Error _ -> use
-  let ignore_errork ~use = function Ok _ as r -> r | Error _ -> Ok use
+  let kignore_error ~use = function Ok _ as r -> r | Error _ -> Ok use
 end
 
 (*---------------------------------------------------------------------------
