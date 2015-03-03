@@ -94,38 +94,31 @@ module R : sig
 
   (** {1 Error messages} *)
 
-  val msg : ('a, Format.formatter, unit, string) format4 -> 'a
-  (** [msg fmt ...] formats a string according to [fmt]. *)
+  type msg = [ `Msg of string ]
+  (** The type for (error) messages. *)
 
-  type err_msg = [ `Msg of string ]
-  (** The type for error messages. *)
+  val msg : ('a, Format.formatter, unit, [> msg]) format4 -> 'a
+  (** [msg fmt ...] formats a message according to [fmt]. *)
 
-  val pp_err_msg : Format.formatter -> err_msg -> unit
+  val pp_msg : Format.formatter -> msg -> unit
   (** [pp_msg ppf m] prints [m] on [ppf]. *)
 
-  val err_msg : ('a, Format.formatter, unit, ('b, [> err_msg]) result)
+  val error_msg : ('a, Format.formatter, unit, ('b, [> msg]) result)
       format4 -> 'a
-  (** [err_msg fmt ...] is an error message formatted according to [fmt]. *)
+  (** [error_msg fmt ...] is an error message formatted according to [fmt]. *)
 
-  val reword_err_msg : ?replace:bool -> (string -> string)  ->
-    ('a, err_msg) result -> ('a, [> err_msg]) result
-  (** [reword_err_msg ~replace reword r] is:
-      {ul
-      {- [v] if [r = Ok v]}
-      {- [Error (`Msg (reword e))] if [r = Error (`Msg e)] and
-         [replace = true]}
-      {- [Error (`Msg (e ^ "\n" ^ (reword e)))] if [r = Error (`Msg e)]
-         and [replace = false].}}
+  val reword_error_msg : ?replace:bool -> (msg -> msg)  ->
+    ('a, msg) result -> ('a, msg) result
+  (** [reword_error_msg ~replace reword r] is like {!reword_error} except
+      if [replace] is [false] (default), the result of [reword msg] is
+      concatened, on a new line to the old message. *)
 
-      If replace is [false] (default), [reword e] is concatenated, on a new
-      line, to the old message. *)
-
-  val error_to_err_msg : pp:(Format.formatter -> 'b -> unit) ->
-    ('a, 'b) result -> ('a, [> err_msg]) result
-  (** [error_to_err_msg pp r] converts errors in [r] with [pp] to an error
+  val error_to_msg : pp:(Format.formatter -> 'b -> unit) ->
+    ('a, 'b) result -> ('a, [> msg]) result
+  (** [error_to_msg pp r] converts errors in [r] with [pp] to an error
       message. *)
 
-  val err_msg_to_invalid_arg : ('a, err_msg) result -> 'a
+  val error_msg_to_invalid_arg : ('a, msg) result -> 'a
   (** [err_msg_to_invalid_arg r] is [v] if [r = Ok v] and
       @raise Invalid_argument with the error message otherwise. *)
 
@@ -133,19 +126,19 @@ module R : sig
 
       {e Getting rid of [null] was not enough}. *)
 
-  type err_exn = [ `Exn of Printexc.raw_backtrace ]
-  (** The type for exception errors. *)
+  type backtrace = [ `Backtrace of Printexc.raw_backtrace ]
+  (** The type for exception backtraces. *)
 
-  val pp_err_exn : Format.formatter -> err_exn -> unit
-  (** [pp_err_exn ppf e] prints [e] on [ppf]. *)
+  val pp_backtrace : Format.formatter -> backtrace -> unit
+  (** [pp_backtrace ppf bt] prints [bt] on [ppf]. *)
 
-  val trap_exn : ('a -> 'b) -> 'a -> ('b, [> err_exn]) result
+  val trap_exn : ('a -> 'b) -> 'a -> ('b, [> backtrace]) result
   (** [trap_exn f v] is [f v] and traps any exception that may
-      occur. *)
+      occur as an exception backtrace error. *)
 
-  val err_exn_to_msg : ('a, err_exn) result -> ('a, [> err_msg]) result
-  (** [err_exn_to_msg r] converts exception errors in [r] to an error
-      message. *)
+  val error_backtrace_to_msg : ('a, backtrace) result -> ('a, [> msg]) result
+  (** [error_backtrace_to_msg r] converts exception backtrace errors in
+      [r] to an error message. *)
 
   (** {1 Predicates} *)
 

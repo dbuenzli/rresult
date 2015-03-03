@@ -44,8 +44,6 @@ module R = struct
 
   (* Error messages *)
 
-  type err_msg = [ `Msg of string ]
-
   let pp_lines ppf s = (* hints new lines *)
     let left = ref 0 and right = ref 0 and len = String.length s in
     let flush () =
@@ -58,42 +56,48 @@ module R = struct
     done;
     if !left <> len then flush ()
 
-  let pp_err_msg ppf (`Msg msg) = pp_lines ppf msg
+  type msg = [ `Msg of string ]
+  let msg fmt =
+    let kmsg _ = `Msg (Format.flush_str_formatter ()) in
+    Format.kfprintf kmsg Format.str_formatter fmt
 
-  let err_msg fmt =
+  let pp_msg ppf (`Msg msg) = pp_lines ppf msg
+
+  let error_msg fmt =
     let kerr _ = Error (`Msg (Format.flush_str_formatter ())) in
     Format.kfprintf kerr Format.str_formatter fmt
 
-  let msg = Format.asprintf
-  let reword_err_msg ?(replace = false) msg = function
+  let reword_error_msg ?(replace = false) reword = function
   | Ok _ as r -> r
-  | Error (`Msg e) ->
-      if replace then Error (`Msg (msg e)) else
-      Error (`Msg (Format.sprintf "%s\n%s" e (msg e)))
+  | Error (`Msg e as m) ->
+      if replace then Error (reword m) else
+      let `Msg e' = reword m in
+      error_msg "%s\n%s" e e'
 
-  let error_to_err_msg ~pp = function
+  let error_to_msg ~pp = function
   | Ok _ as r -> r
-  | Error e -> err_msg "%a" pp e
+  | Error e -> error_msg "%a" pp e
 
-  let err_msg_to_invalid_arg = function
+  let error_msg_to_invalid_arg = function
   | Ok v -> v
   | Error (`Msg m) -> invalid_arg m
 
   (* Handling exceptions *)
 
-  type err_exn = [ `Exn of Printexc.raw_backtrace ]
-  let pp_err_exn ppf (`Exn e) =
+  type backtrace = [ `Backtrace of Printexc.raw_backtrace ]
+  let pp_backtrace ppf (`Backtrace e) =
     pp_lines ppf (Printexc.raw_backtrace_to_string e)
 
   let trap_exn f v = try Ok (f v) with
   | e ->
       let bt = Printexc.get_raw_backtrace () in
-      Error (`Exn bt)
+      Error (`Backtrace bt)
 
-  let err_exn_to_msg = function
+  let error_backtrace_to_msg = function
   | Ok _ as r -> r
-  | Error (`Exn e) ->
-      err_msg "Unexpected exception:\n%s" (Printexc.raw_backtrace_to_string e)
+  | Error (`Backtrace bt) ->
+      let bt = Printexc.raw_backtrace_to_string bt in
+      error_msg "Unexpected exception:\n%s" bt
 
   (* Predicates *)
 
