@@ -71,7 +71,7 @@ module R = struct
       if replace then Error (`Msg (msg e)) else
       Error (`Msg (Format.sprintf "%s\n%s" e (msg e)))
 
-  let err_to_err_msg ~pp = function
+  let error_to_err_msg ~pp = function
   | Ok _ as r -> r
   | Error e -> err_msg "%a" pp e
 

@@ -115,9 +115,9 @@ module R : sig
       If replace is [false] (default), [reword e] is concatenated, on a new
       line, to the old message. *)
 
-  val err_to_err_msg : pp:(Format.formatter -> 'b -> unit) ->
+  val error_to_err_msg : pp:(Format.formatter -> 'b -> unit) ->
     ('a, 'b) result -> ('a, [> err_msg]) result
-  (** [err_to_err_msg pp r] converts errors in [r] with [pp] to an error
+  (** [error_to_err_msg pp r] converts errors in [r] with [pp] to an error
       message. *)
 
   val err_msg_to_invalid_arg : ('a, err_msg) result -> 'a
