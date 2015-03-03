@@ -32,8 +32,8 @@ module R : sig
   val error : 'b -> ('a, 'b) result
   (** [error e] is [`Error e]. *)
 
-  val reword_err : ('b -> 'c) -> ('a, 'b) result -> ('a, 'c) result
-  (** [reword_err reword r] is:
+  val reword_error : ('b -> 'c) -> ('a, 'b) result -> ('a, 'c) result
+  (** [reword_error reword r] is:
       {ul
       {- [r] if [r = `Ok v]}
       {- [`Error (reword e)] if [r = `Error e]}} *)
@@ -47,9 +47,9 @@ module R : sig
 
   val pp :
     pp_ok:(Format.formatter -> 'a -> unit) ->
-    pp_err:(Format.formatter -> 'b -> unit) -> Format.formatter ->
+    pp_error:(Format.formatter -> 'b -> unit) -> Format.formatter ->
     ('a, 'b) result -> unit
-  (** [pp pp_ok pp_err ppf r] prints [r] on [ppf] using [pp_ok] and
+  (** [pp pp_ok pp_error ppf r] prints [r] on [ppf] using [pp_ok] and
       [pp_err]. *)
 
   (** {1 Composing results} *)
@@ -150,11 +150,11 @@ module R : sig
 
       {b Warning.} Using these functions is, most of the time, a bad idea. *)
 
-  val ignore_err : use:'a -> ('a, 'b) result -> 'a
-  (** [ignore_err ~use r] is [v] if [r = `Ok v] and [use] otherwise. *)
+  val ignore_error : use:'a -> ('a, 'b) result -> 'a
+  (** [ignore_error ~use r] is [v] if [r = `Ok v] and [use] otherwise. *)
 
-  val ignore_errk : use:'a -> ('a, 'b) result -> ('a, 'b) result
-  (** [ignore_errk ~use r] is:
+  val ignore_errork : use:'a -> ('a, 'b) result -> ('a, 'b) result
+  (** [ignore_errork ~use r] is:
       {ul
       {- [r] if [r = `Ok v]}
       {- [`Ok use] if [r = `Error _].}} *)

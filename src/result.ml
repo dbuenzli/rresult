@@ -11,18 +11,6 @@ module R = struct
   let err_error = "result value is (Error _)"
   let err_ok = "result value is (Ok _)"
 
-  let pp_lines ppf s = (* hints new lines *)
-    let left = ref 0 and right = ref 0 and len = String.length s in
-    let flush () =
-      Format.pp_print_string ppf (String.sub s !left (!right - !left));
-      incr right; left := !right;
-    in
-    while (!right <> len) do
-      if s.[!right] = '\n' then (flush (); Format.pp_force_newline ppf ()) else
-      incr right;
-    done;
-    if !left <> len then flush ()
-
   (* Results *)
 
   type ('a, 'b) t = ('a, 'b) result
@@ -30,13 +18,13 @@ module R = struct
   let error e = Error e
   let get_ok = function Ok v -> v | Error _ -> invalid_arg err_error
   let get_error = function Error e -> e | Ok _ -> invalid_arg err_ok
-  let reword_err reword = function
+  let reword_error reword = function
   | Ok _ as r -> r
   | Error e -> Error (reword e)
 
-  let pp ~pp_ok ~pp_err ppf = function
+  let pp ~pp_ok ~pp_error ppf = function
   | Ok v -> Format.fprintf ppf "@[Ok %a@]" pp_ok v
-  | Error e -> Format.fprintf ppf "@[Error %a@]" pp_err e
+  | Error e -> Format.fprintf ppf "@[Error %a@]" pp_error e
 
   (* Composing results *)
 
@@ -54,6 +42,19 @@ module R = struct
   (* Error messages *)
 
   type err_msg = [ `Msg of string ]
+
+  let pp_lines ppf s = (* hints new lines *)
+    let left = ref 0 and right = ref 0 and len = String.length s in
+    let flush () =
+      Format.pp_print_string ppf (String.sub s !left (!right - !left));
+      incr right; left := !right;
+    in
+    while (!right <> len) do
+      if s.[!right] = '\n' then (flush (); Format.pp_force_newline ppf ()) else
+      incr right;
+    done;
+    if !left <> len then flush ()
+
   let pp_err_msg ppf (`Msg msg) = pp_lines ppf msg
 
   let err_msg fmt =
@@ -98,8 +99,8 @@ module R = struct
 
   (* Ignoring errors *)
 
-  let ignore_err ~use = function Ok v -> v | Error _ -> use
-  let ignore_errk ~use = function Ok _ as r -> r | Error _ -> Ok use
+  let ignore_error ~use = function Ok v -> v | Error _ -> use
+  let ignore_errork ~use = function Ok _ as r -> r | Error _ -> Ok use
 end
 
 (*---------------------------------------------------------------------------
