@@ -49,7 +49,7 @@ module R : sig
     pp_error:(Format.formatter -> 'b -> unit) -> Format.formatter ->
     ('a, 'b) result -> unit
   (** [pp pp_ok pp_error ppf r] prints [r] on [ppf] using [pp_ok] and
-      [pp_err]. *)
+      [pp_error]. *)
 
   (**/**)
   val return : 'a -> ('a, 'b) result
@@ -89,6 +89,9 @@ module R : sig
 
   (** {1 Error messages} *)
 
+  val msg : ('a, Format.formatter, unit, string) format4 -> 'a
+  (** [msg fmt ...] formats a string according to [fmt]. *)
+
   type err_msg = [ `Msg of string ]
   (** The type for error messages. *)
 
@@ -99,11 +102,8 @@ module R : sig
       format4 -> 'a
   (** [err_msg fmt ...] is an error message formatted according to [fmt]. *)
 
-  val msg : ('a, Format.formatter, unit, string) format4 -> 'a
-  (** [msg fmt ...] formats a string according to [fmt]. *)
-
   val reword_err_msg : ?replace:bool -> (string -> string)  ->
-    ('a, err_msg) result -> ('a, err_msg) result
+    ('a, err_msg) result -> ('a, [> err_msg]) result
   (** [reword_err ~replace reword r] is:
       {ul
       {- [v] if [r = Ok v]}
@@ -148,7 +148,7 @@ module R : sig
   (** [is_ok r] is [true] iff [r = Ok _]. *)
 
   val is_error : ('a, 'b) result -> bool
-  (** [is_eror r] is [true] iff [r = Error _]. *)
+  (** [is_error r] is [true] iff [r = Error _]. *)
 
   (** {1 Converting} *)
 
