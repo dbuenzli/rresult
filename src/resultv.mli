@@ -4,11 +4,11 @@
    %%NAME%% release %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-(** Error handling for OCaml.
+(** Result value combinators.
 
   Open the module to use it, this defines only one type and a module
   in your scope. To directly bring the {!R.Infix} operators in scope
-  open {!Result_infix} instead.
+  open {!Resultv_infix} instead.
 
   {e Release %%VERSION%% - %%MAINTAINER%% } *)
 

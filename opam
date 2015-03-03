@@ -1,11 +1,11 @@
 opam-version: "1.2"
 maintainer: "Daniel Bünzli <daniel.buenzl i@erratique.ch>"
 authors: ["Daniel Bünzli <daniel.buenzl i@erratique.ch>"]
-homepage: "http://erratique.ch/software/result"
-doc: "http://erratique.ch/software/result"
-dev-repo: "http://erratique.ch/repos/result.git"
-bug-reports: "https://github.com/dbuenzli/result/issues"
-tags: [ "error" "org:erratique" ]
+homepage: "http://erratique.ch/software/resultv"
+doc: "http://erratique.ch/software/resultv"
+dev-repo: "http://erratique.ch/repos/resultv.git"
+bug-reports: "https://github.com/dbuenzli/resultv/issues"
+tags: [ "result" "error" "declarative" "org:erratique" ]
 license: "BSD3"
 available: [ ocaml-version >= "4.01.0"]
 build:

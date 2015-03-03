@@ -4,8 +4,8 @@
    %%NAME%% release %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-include Result
-include Result.R.Infix
+include Resultv
+include Resultv.R.Infix
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli.
