@@ -6,13 +6,18 @@
 
 (** Result value combinators.
 
-  Open the module to use it, this defines only one type and a module
-  in your scope. To directly bring the {!R.Infix} operators in scope
-  open {!Resultv_infix} instead.
+    [Resultv] is a module for handling computation results and errors
+    in an explicit and declarative manner without resorting to
+    exceptions. It defines a {!result} type and {{!R}combinators}
+    to operate on these values.
 
-  {e Release %%VERSION%% - %%MAINTAINER%% } *)
+    Open the module to use it, this defines only one type and a module
+    in your scope. To directly bring the {!R.Infix} operators in scope
+    open {!Resultv_infix} instead.
 
-(** {1 Interface} *)
+    {e Release %%VERSION%% - %%MAINTAINER%% } *)
+
+(** {1 Results} *)
 
 (** The type for results. *)
 type ('a, 'b) result = Ok of 'a | Error of 'b
@@ -104,7 +109,7 @@ module R : sig
 
   val reword_err_msg : ?replace:bool -> (string -> string)  ->
     ('a, err_msg) result -> ('a, [> err_msg]) result
-  (** [reword_err ~replace reword r] is:
+  (** [reword_err_msg ~replace reword r] is:
       {ul
       {- [v] if [r = Ok v]}
       {- [Error (`Msg (reword e))] if [r = Error (`Msg e)] and
@@ -172,10 +177,7 @@ module R : sig
   (** [ignore_error ~use r] is [v] if [r = Ok v] and [use] otherwise. *)
 
   val kignore_error : use:('a, 'c) result -> ('a, 'b) result -> ('a, 'c) result
-  (** [kignore_error ~use r] is:
-      {ul
-      {- [r] if [r = Ok v]}
-      {- [use] if [r = Error _].}} *)
+  (** [kignore_error ~use r] if [r] if [r = Ok v] and [use] otherwise. *)
 end
 
 (*---------------------------------------------------------------------------

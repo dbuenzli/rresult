@@ -2,8 +2,9 @@ Resultv — Result value combinators for OCaml
 -------------------------------------------------------------------------------
 Release %%VERSION%%
 
-Resultv is an OCaml module for handling errors without resorting to
-exceptions. It defines a resultv type and combinators to operate on
+Resultv is an OCaml module for handling computation results and errors
+in an explicit and declarative manner, without resorting to
+exceptions. It defines a result type and combinators to operate on
 these values.
 
 Resultv has no dependency and is distributed under the BSD3 license.
