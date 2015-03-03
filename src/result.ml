@@ -26,6 +26,9 @@ module R = struct
   | Ok v -> Format.fprintf ppf "@[Ok %a@]" pp_ok v
   | Error e -> Format.fprintf ppf "@[Error %a@]" pp_error e
 
+  let return = ret
+  let fail = error
+
   (* Composing results *)
 
   let bind v f = match v with Ok v -> f v | Error _ as e -> e

@@ -51,6 +51,11 @@ module R : sig
   (** [pp pp_ok pp_error ppf r] prints [r] on [ppf] using [pp_ok] and
       [pp_err]. *)
 
+  (**/**)
+  val return : 'a -> ('a, 'b) result
+  val fail : 'b -> ('a, 'b) result
+  (**/**)
+
   (** {1 Composing results} *)
 
   val bind : ('a, 'b) result -> ('a -> ('a, 'b) result) -> ('a, 'b) result
