@@ -13,7 +13,7 @@
 
 (** {1 Results} *)
 
-include module type of Result
+include module type of Result with type ('a, 'b) result = ('a, 'b) Result.result
 include module type of Result.R.Infix
 
 (*---------------------------------------------------------------------------

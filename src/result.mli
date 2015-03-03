@@ -14,15 +14,16 @@
 
 (** {1 Interface} *)
 
-type ('a, 'b) result = [ `Ok of 'a | `Error of 'b ]
 (** The type for results. *)
+type ('a, 'b) result = Ok of 'a | Error of 'b
+
 
 (** Result value combinators. *)
 module R : sig
 
   (** {1 Results} *)
 
-  type ('a, 'b) t = [ `Ok of 'a | `Error of 'b ]
+  type ('a, 'b) t = ('a, 'b) result
   (** The type for results. *)
 
   val ret : 'a -> ('a, 'b) result

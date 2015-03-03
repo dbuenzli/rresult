@@ -4,12 +4,12 @@
    %%NAME%% release %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-type ('a, 'b) result = [`Ok of 'a | `Error of 'b]
+type ('a, 'b) result = Ok of 'a | Error of 'b
 
 module R = struct
 
-  let err_error = "result value is (`Error _)"
-  let err_ok = "result value is (`Ok _)"
+  let err_error = "result value is (Error _)"
+  let err_ok = "result value is (Ok _)"
 
   let pp_lines ppf s = (* hints new lines *)
     let left = ref 0 and right = ref 0 and len = String.length s in
@@ -25,24 +25,24 @@ module R = struct
 
   (* Results *)
 
-  type ('a, 'b) t = [`Ok of 'a | `Error of 'b]
-  let ret v = `Ok v
-  let error e = `Error e
-  let get_ok = function `Ok v -> v | `Error _ -> invalid_arg err_error
-  let get_error = function `Error e -> e | `Ok _ -> invalid_arg err_ok
+  type ('a, 'b) t = ('a, 'b) result
+  let ret v = Ok v
+  let error e = Error e
+  let get_ok = function Ok v -> v | Error _ -> invalid_arg err_error
+  let get_error = function Error e -> e | Ok _ -> invalid_arg err_ok
   let reword_err reword = function
-  | `Ok _ as r -> r
-  | `Error e -> `Error (reword e)
+  | Ok _ as r -> r
+  | Error e -> Error (reword e)
 
   let pp ~pp_ok ~pp_err ppf = function
-  | `Ok v -> Format.fprintf ppf "@[`Ok %a@]" pp_ok v
-  | `Error e -> Format.fprintf ppf "@[`Error %a@]" pp_err e
+  | Ok v -> Format.fprintf ppf "@[Ok %a@]" pp_ok v
+  | Error e -> Format.fprintf ppf "@[Error %a@]" pp_err e
 
   (* Composing results *)
 
-  let bind v f = match v with `Ok v -> f v | `Error _ as e -> e
-  let map v f = match v with `Ok v -> `Ok (f v) | `Error _ as e -> e
-  let join r = match r with `Ok v -> v | `Error _ as e -> e
+  let bind v f = match v with Ok v -> f v | Error _ as e -> e
+  let map v f = match v with Ok v -> Ok (f v) | Error _ as e -> e
+  let join r = match r with Ok v -> v | Error _ as e -> e
   let ( >>= ) = bind
   let ( >>| ) = map
 
@@ -57,23 +57,23 @@ module R = struct
   let pp_err_msg ppf (`Msg msg) = pp_lines ppf msg
 
   let err_msg fmt =
-    let kerr _ = `Error (`Msg (Format.flush_str_formatter ())) in
+    let kerr _ = Error (`Msg (Format.flush_str_formatter ())) in
     Format.kfprintf kerr Format.str_formatter fmt
 
   let msg = Format.asprintf
   let reword_err_msg ?(replace = false) msg = function
-  | `Ok _ as r -> r
-  | `Error (`Msg e) ->
-      if replace then `Error (`Msg (msg e)) else
-      `Error (`Msg (Format.sprintf "%s\n%s" e (msg e)))
+  | Ok _ as r -> r
+  | Error (`Msg e) ->
+      if replace then Error (`Msg (msg e)) else
+      Error (`Msg (Format.sprintf "%s\n%s" e (msg e)))
 
   let err_to_err_msg ~pp = function
-  | `Ok _ as r -> r
-  | `Error e -> err_msg "%a" pp e
+  | Ok _ as r -> r
+  | Error e -> err_msg "%a" pp e
 
   let err_msg_to_invalid_arg = function
-  | `Ok v -> v
-  | `Error (`Msg m) -> invalid_arg m
+  | Ok v -> v
+  | Error (`Msg m) -> invalid_arg m
 
   (* Handling exceptions *)
 
@@ -81,25 +81,25 @@ module R = struct
   let pp_err_exn ppf (`Exn e) =
     pp_lines ppf (Printexc.raw_backtrace_to_string e)
 
-  let trap_exn f v = try `Ok (f v) with
+  let trap_exn f v = try Ok (f v) with
   | e ->
       let bt = Printexc.get_raw_backtrace () in
-      `Error (`Exn bt)
+      Error (`Exn bt)
 
   let err_exn_to_msg = function
-  | `Ok _ as r -> r
-  | `Error (`Exn e) ->
+  | Ok _ as r -> r
+  | Error (`Exn e) ->
       err_msg "Unexpected exception:\n%s" (Printexc.raw_backtrace_to_string e)
 
   (* Converting *)
 
-  let to_option = function `Ok v -> Some v | `Error e -> None
-  let of_option ~none = function None -> none | Some v -> `Ok v
+  let to_option = function Ok v -> Some v | Error e -> None
+  let of_option ~none = function None -> none | Some v -> Ok v
 
   (* Ignoring errors *)
 
-  let ignore_err ~use = function `Ok v -> v | `Error _ -> use
-  let ignore_errk ~use = function `Ok _ as r -> r | `Error _ -> `Ok use
+  let ignore_err ~use = function Ok v -> v | Error _ -> use
+  let ignore_errk ~use = function Ok _ as r -> r | Error _ -> Ok use
 end
 
 (*---------------------------------------------------------------------------
