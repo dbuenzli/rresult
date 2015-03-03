@@ -95,6 +95,11 @@ module R = struct
   | Error (`Exn e) ->
       err_msg "Unexpected exception:\n%s" (Printexc.raw_backtrace_to_string e)
 
+  (* Predicates *)
+
+  let is_ok = function Ok _ -> true | Error _ -> false
+  let is_error = function Ok _ -> false | Error _ -> true
+
   (* Converting *)
 
   let to_option = function Ok v -> Some v | Error e -> None

@@ -142,6 +142,14 @@ module R : sig
   (** [err_exn_to_msg r] converts exception errors in [r] to an error
       message. *)
 
+  (** {1 Predicates} *)
+
+  val is_ok : ('a, 'b) result -> bool
+  (** [is_ok r] is [true] iff [r = `Ok _]. *)
+
+  val is_error : ('a, 'b) result -> bool
+  (** [is_eror r] is [true] iff [r = `Error _]. *)
+
   (** {1 Converting} *)
 
   val to_option : ('a, 'b) result -> 'a option
