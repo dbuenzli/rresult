@@ -17,7 +17,6 @@
 (** The type for results. *)
 type ('a, 'b) result = Ok of 'a | Error of 'b
 
-
 (** Result value combinators. *)
 module R : sig
 
@@ -145,6 +144,12 @@ module R : sig
 
   val of_option : none:('a, 'b) result -> 'a option -> ('a, 'b) result
   (** [of_option ~none r] is [`Ok v] if [r = Some v] and [none] otherwise. *)
+
+  val to_presult : ('a, 'b) result -> [ `Ok of 'a | `Error of 'b ]
+  (** [to_presult r] is [r] as a polymorphic variant result value. *)
+
+  val of_presult : [ `Ok of 'a | `Error of 'b ] -> ('a, 'b) result
+  (** [of_presult pr] is [pr] as a result value. *)
 
   (** {1 Ignoring errors}
 

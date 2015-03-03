@@ -96,6 +96,8 @@ module R = struct
 
   let to_option = function Ok v -> Some v | Error e -> None
   let of_option ~none = function None -> none | Some v -> Ok v
+  let to_presult = function Ok v -> `Ok v | Error e -> `Error e
+  let of_presult = function `Ok v -> Ok v | `Error e -> Error e
 
   (* Ignoring errors *)
 
