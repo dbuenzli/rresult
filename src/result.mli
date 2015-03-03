@@ -26,22 +26,22 @@ module R : sig
   (** The type for results. *)
 
   val ret : 'a -> ('a, 'b) result
-  (** [ret v] is [`Ok v]. *)
+  (** [ret v] is [Ok v]. *)
 
   val error : 'b -> ('a, 'b) result
-  (** [error e] is [`Error e]. *)
+  (** [error e] is [Error e]. *)
 
   val reword_error : ('b -> 'c) -> ('a, 'b) result -> ('a, 'c) result
   (** [reword_error reword r] is:
       {ul
-      {- [r] if [r = `Ok v]}
-      {- [`Error (reword e)] if [r = `Error e]}} *)
+      {- [r] if [r = Ok v]}
+      {- [Error (reword e)] if [r = Error e]}} *)
 
   val get_ok : ('a, 'b) result -> 'a
-  (** [get r] is [v] if [r = `Ok v] and @raise Invalid_argument otherwise. *)
+  (** [get r] is [v] if [r = Ok v] and @raise Invalid_argument otherwise. *)
 
   val get_error : ('a, 'b) result -> 'b
-  (** [get_error r] is [e] if [r = `Error e] and @raise Invalid_argument
+  (** [get_error r] is [e] if [r = Error e] and @raise Invalid_argument
       otherwise. *)
 
   val pp :
@@ -59,13 +59,13 @@ module R : sig
   (** {1 Composing results} *)
 
   val bind : ('a, 'b) result -> ('a -> ('a, 'b) result) -> ('a, 'b) result
-  (** [bind r f] is [f v] if [r = `Ok v] and [r] if [r = `Error _]. *)
+  (** [bind r f] is [f v] if [r = Ok v] and [r] if [r = Error _]. *)
 
   val map : ('a, 'b) result -> ('a -> 'c) -> ('c, 'b) result
   (** [map r f] is [bind r (fun v -> ret (f v))]. *)
 
   val join : (('a, 'b) result, 'b) result -> ('a, 'b) result
-  (** [join r] is [v] if [r = `Ok v] and [r] otherwise. *)
+  (** [join r] is [v] if [r = Ok v] and [r] otherwise. *)
 
   val ( >>= ) : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
   (** [r >>= f] is {!bind}[ r f]. *)
@@ -106,10 +106,10 @@ module R : sig
     ('a, err_msg) result -> ('a, err_msg) result
   (** [reword_err ~replace reword r] is:
       {ul
-      {- [v] if [r = `Ok v]}
-      {- [`Error (`Msg (reword e))] if [r = `Error (`Msg e)] and
+      {- [v] if [r = Ok v]}
+      {- [Error (`Msg (reword e))] if [r = Error (`Msg e)] and
          [replace = true]}
-      {- [`Error (`Msg (e ^ "\n" ^ (reword e)))] if [r = `Error (`Msg e)]
+      {- [Error (`Msg (e ^ "\n" ^ (reword e)))] if [r = Error (`Msg e)]
          and [replace = false].}}
 
       If replace is [false] (default), [reword e] is concatenated, on a new
@@ -121,7 +121,7 @@ module R : sig
       message. *)
 
   val err_msg_to_invalid_arg : ('a, err_msg) result -> 'a
-  (** [err_msg_to_invalid_arg r] is [v] if [r = `Ok v] and
+  (** [err_msg_to_invalid_arg r] is [v] if [r = Ok v] and
       @raise Invalid_argument with the error message otherwise. *)
 
   (** {1 Handling unexpected exceptions}
@@ -145,18 +145,18 @@ module R : sig
   (** {1 Predicates} *)
 
   val is_ok : ('a, 'b) result -> bool
-  (** [is_ok r] is [true] iff [r = `Ok _]. *)
+  (** [is_ok r] is [true] iff [r = Ok _]. *)
 
   val is_error : ('a, 'b) result -> bool
-  (** [is_eror r] is [true] iff [r = `Error _]. *)
+  (** [is_eror r] is [true] iff [r = Error _]. *)
 
   (** {1 Converting} *)
 
   val to_option : ('a, 'b) result -> 'a option
-  (** [to_option r] is [Some v] if [r = `Ok v] and [None] otherwise. *)
+  (** [to_option r] is [Some v] if [r = Ok v] and [None] otherwise. *)
 
   val of_option : none:('a, 'b) result -> 'a option -> ('a, 'b) result
-  (** [of_option ~none r] is [`Ok v] if [r = Some v] and [none] otherwise. *)
+  (** [of_option ~none r] is [Ok v] if [r = Some v] and [none] otherwise. *)
 
   val to_presult : ('a, 'b) result -> [ `Ok of 'a | `Error of 'b ]
   (** [to_presult r] is [r] as a polymorphic variant result value. *)
@@ -169,13 +169,13 @@ module R : sig
       {b Warning.} Using these functions is, most of the time, a bad idea. *)
 
   val ignore_error : use:'a -> ('a, 'b) result -> 'a
-  (** [ignore_error ~use r] is [v] if [r = `Ok v] and [use] otherwise. *)
+  (** [ignore_error ~use r] is [v] if [r = Ok v] and [use] otherwise. *)
 
   val ignore_errork : use:'a -> ('a, 'b) result -> ('a, 'b) result
   (** [ignore_errork ~use r] is:
       {ul
-      {- [r] if [r = `Ok v]}
-      {- [`Ok use] if [r = `Error _].}} *)
+      {- [r] if [r = Ok v]}
+      {- [Ok use] if [r = Error _].}} *)
 end
 
 (*---------------------------------------------------------------------------
