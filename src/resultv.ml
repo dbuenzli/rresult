@@ -57,26 +57,28 @@ module R = struct
     if !left <> len then flush ()
 
   type msg = [ `Msg of string ]
-  let msg fmt =
+  let msg s = `Msg s
+  let msgf fmt =
     let kmsg _ = `Msg (Format.flush_str_formatter ()) in
     Format.kfprintf kmsg Format.str_formatter fmt
 
   let pp_msg ppf (`Msg msg) = pp_lines ppf msg
 
-  let error_msg fmt =
+  let error_msg s = Error (`Msg s)
+  let error_msgf fmt =
     let kerr _ = Error (`Msg (Format.flush_str_formatter ())) in
     Format.kfprintf kerr Format.str_formatter fmt
 
   let reword_error_msg ?(replace = false) reword = function
   | Ok _ as r -> r
-  | Error (`Msg e as m) ->
-      if replace then Error (reword m) else
-      let `Msg e' = reword m in
-      error_msg "%s\n%s" e e'
+  | Error (`Msg e) ->
+      if replace then Error (reword e) else
+      let `Msg e' = reword e in
+      error_msgf "%s\n%s" e e'
 
   let error_to_msg ~pp = function
   | Ok _ as r -> r
-  | Error e -> error_msg "%a" pp e
+  | Error e -> error_msgf "%a" pp e
 
   let error_msg_to_invalid_arg = function
   | Ok v -> v
@@ -97,7 +99,7 @@ module R = struct
   | Ok _ as r -> r
   | Error (`Backtrace bt) ->
       let bt = Printexc.raw_backtrace_to_string bt in
-      error_msg "Unexpected exception:\n%s" bt
+      error_msgf "Unexpected exception:\n%s" bt
 
   (* Predicates *)
 

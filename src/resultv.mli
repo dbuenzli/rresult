@@ -97,20 +97,26 @@ module R : sig
   type msg = [ `Msg of string ]
   (** The type for (error) messages. *)
 
-  val msg : ('a, Format.formatter, unit, [> msg]) format4 -> 'a
-  (** [msg fmt ...] formats a message according to [fmt]. *)
+  val msg : string -> msg
+  (** [msg s] is [`Msg s]. *)
+
+  val msgf : ('a, Format.formatter, unit, [> msg]) format4 -> 'a
+  (** [msgf fmt ...] formats a message according to [fmt]. *)
 
   val pp_msg : Format.formatter -> msg -> unit
   (** [pp_msg ppf m] prints [m] on [ppf]. *)
 
-  val error_msg : ('a, Format.formatter, unit, ('b, [> msg]) result)
-      format4 -> 'a
-  (** [error_msg fmt ...] is an error message formatted according to [fmt]. *)
+  val error_msg : string -> ('a, msg) result
+  (** [error_msg s] is [error (`Msg s)]. *)
 
-  val reword_error_msg : ?replace:bool -> (msg -> msg)  ->
+  val error_msgf : ('a, Format.formatter, unit, ('b, [> msg]) result)
+      format4 -> 'a
+  (** [error_msgf fmt ...] is an error message formatted according to [fmt]. *)
+
+  val reword_error_msg : ?replace:bool -> (string -> msg)  ->
     ('a, msg) result -> ('a, msg) result
   (** [reword_error_msg ~replace reword r] is like {!reword_error} except
-      if [replace] is [false] (default), the result of [reword msg] is
+      if [replace] is [false] (default), the result of [reword old_msg] is
       concatened, on a new line to the old message. *)
 
   val error_to_msg : pp:(Format.formatter -> 'b -> unit) ->
