@@ -7,8 +7,8 @@
 (** Error handling for OCaml.
 
   Open the module to use it, this defines only one type and a module
-  in your scope. To use the {!R.Infix} operators you can open {!Result_infix}
-  instead.
+  in your scope. To directly bring the {!R.Infix} operators in scope
+  open {!Result_infix} instead.
 
   {e Release %%VERSION%% - %%MAINTAINER%% } *)
 
