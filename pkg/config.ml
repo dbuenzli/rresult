@@ -5,7 +5,7 @@
 module Config = struct
   include Config_default
   let vars =
-    [ "NAME", "resultv";
+    [ "NAME", "rresult";
       "VERSION", Git.describe ~chop_v:true "master";
       "MAINTAINER", "Daniel Bünzli <daniel.buenzl i\\@erratique.ch>" ]
 end

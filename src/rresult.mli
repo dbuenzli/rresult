@@ -6,14 +6,14 @@
 
 (** Result value combinators.
 
-    [Resultv] is a module for handling computation results and errors
+    [Rresult] is a module for handling computation results and errors
     in an explicit and declarative manner without resorting to
     exceptions. It defines a {!result} type and {{!R}combinators}
     to operate on these values.
 
     Open the module to use it, this defines only one type and a module
     in your scope. To directly bring the {!R.Infix} operators in scope
-    open {!Resultv_infix} instead.
+    open {!Rresult_infix} instead.
 
     {e Release %%VERSION%% - %%MAINTAINER%% } *)
 

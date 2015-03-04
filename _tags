@@ -1,4 +1,4 @@
 <**/*.{ml,mli}> : bin_annot
 <src> : include
-<src/resultv_top*> : package(compiler-libs.toplevel)
+<src/rresult_top*> : package(compiler-libs.toplevel)
 <test> : include

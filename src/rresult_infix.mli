@@ -4,21 +4,21 @@
    %%NAME%% release %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-(** {!Resultv} infix operator support.
+(** {!Rresult} infix operator support.
 
-    Open this module rather than {!Resultv} to get the infix operators
-    of {!Resultv.R.Infix} in your scope.
+    Open this module rather than {!Rresult} to get the infix operators
+    of {!Rresult.R.Infix} in your scope.
 
     {e Release %%VERSION%% - %%MAINTAINER%% }*)
 
 (** {1 Results} *)
 
-type ('a, 'b) result = ('a, 'b) Resultv.result = Ok of 'a | Error of 'b
+type ('a, 'b) result = ('a, 'b) Rresult.result = Ok of 'a | Error of 'b
 
-include module type of Resultv
-  with type ('a, 'b) result := ('a, 'b) Resultv.result
+include module type of Rresult
+  with type ('a, 'b) result := ('a, 'b) Rresult.result
 
-include module type of Resultv.R.Infix
+include module type of Rresult.R.Infix
 
 (*---------------------------------------------------------------------------
    Copyright 2014 Daniel C. Bünzli.
