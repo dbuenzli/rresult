@@ -13,8 +13,10 @@
 
 (** {1 Results} *)
 
+type ('a, 'b) result = ('a, 'b) Resultv.result = Ok of 'a | Error of 'b
+
 include module type of Resultv
-  with type ('a, 'b) result = ('a, 'b) Resultv.result
+  with type ('a, 'b) result := ('a, 'b) Resultv.result
 
 include module type of Resultv.R.Infix
 
