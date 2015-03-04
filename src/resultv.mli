@@ -114,7 +114,7 @@ module R : sig
   (** [error_msgf fmt ...] is an error message formatted according to [fmt]. *)
 
   val reword_error_msg : ?replace:bool -> (string -> msg)  ->
-    ('a, msg) result -> ('a, msg) result
+    ('a, msg) result -> ('a, [> msg]) result
   (** [reword_error_msg ~replace reword r] is like {!reword_error} except
       if [replace] is [false] (default), the result of [reword old_msg] is
       concatened, on a new line to the old message. *)
