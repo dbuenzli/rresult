@@ -30,8 +30,8 @@ module R : sig
   type ('a, 'b) t = ('a, 'b) result
   (** The type for results. *)
 
-  val ret : 'a -> ('a, 'b) result
-  (** [ret v] is [Ok v]. *)
+  val ok : 'a -> ('a, 'b) result
+  (** [ok v] is [Ok v]. *)
 
   val error : 'b -> ('a, 'b) result
   (** [error e] is [Error e]. *)

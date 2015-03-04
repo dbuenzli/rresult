@@ -14,7 +14,7 @@ module R = struct
   (* Results *)
 
   type ('a, 'b) t = ('a, 'b) result
-  let ret v = Ok v
+  let ok v = Ok v
   let error e = Error e
   let get_ok = function Ok v -> v | Error _ -> invalid_arg err_error
   let get_error = function Error e -> e | Ok _ -> invalid_arg err_ok
@@ -26,7 +26,7 @@ module R = struct
   | Ok v -> Format.fprintf ppf "@[Ok %a@]" pp_ok v
   | Error e -> Format.fprintf ppf "@[Error %a@]" pp_error e
 
-  let return = ret
+  let return = ok
   let fail = error
 
   (* Composing results *)
