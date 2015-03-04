@@ -83,6 +83,8 @@ module R = struct
   | Ok v -> v
   | Error (`Msg m) -> invalid_arg m
 
+  let open_error_msg = function Ok _ as r -> r | Error (`Msg m) as r -> r
+
   (* Handling exceptions *)
 
   type backtrace = [ `Backtrace of Printexc.raw_backtrace ]
@@ -99,6 +101,9 @@ module R = struct
   | Error (`Backtrace bt) ->
       let bt = Printexc.raw_backtrace_to_string bt in
       error_msgf "Unexpected exception:\n%s" bt
+
+  let open_error_backtrace = function
+  | Ok _ as r -> r | Error (`Backtrace m) as r -> r
 
   (* Predicates *)
 

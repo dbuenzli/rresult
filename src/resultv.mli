@@ -129,6 +129,10 @@ module R : sig
 
       @raise Invalid_argument with the error message otherwise. *)
 
+  val open_error_msg : ('a, msg) result -> ('a, [> msg]) result
+  (** [open_error_msg r] allows to combine a closed error message
+      variant with other variants. *)
+
   (** {1 Handling unexpected exceptions}
 
       {e Getting rid of [null] was not enough}. *)
@@ -146,6 +150,11 @@ module R : sig
   val error_backtrace_to_msg : ('a, backtrace) result -> ('a, [> msg]) result
   (** [error_backtrace_to_msg r] converts exception backtrace errors in
       [r] to an error message. *)
+
+  val open_error_backtrace : ('a, backtrace) result ->
+    ('a, [> backtrace]) result
+  (** [open_error_backtrace r] allows to combine a closed backtrace error
+      variant with other variants. *)
 
   (** {1 Predicates and comparison} *)
 
