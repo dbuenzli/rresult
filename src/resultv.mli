@@ -97,7 +97,7 @@ module R : sig
   type msg = [ `Msg of string ]
   (** The type for (error) messages. *)
 
-  val msg : string -> msg
+  val msg : string -> [> msg]
   (** [msg s] is [`Msg s]. *)
 
   val msgf : ('a, Format.formatter, unit, [> msg]) format4 -> 'a
@@ -106,7 +106,7 @@ module R : sig
   val pp_msg : Format.formatter -> msg -> unit
   (** [pp_msg ppf m] prints [m] on [ppf]. *)
 
-  val error_msg : string -> ('a, msg) result
+  val error_msg : string -> ('a, [> msg]) result
   (** [error_msg s] is [error (`Msg s)]. *)
 
   val error_msgf : ('a, Format.formatter, unit, ('b, [> msg]) result)
@@ -131,22 +131,22 @@ module R : sig
 
   (** {2 {!Pervasive} string conversion functions} *)
 
-  val bool_of_string : string -> (bool, msg) result
+  val bool_of_string : string -> (bool, [> msg]) result
   (** See {!Pervasives.bool_of_string}. *)
 
-  val int_of_string : string -> (int, msg) result
+  val int_of_string : string -> (int, [> msg]) result
   (** See {!Pervasives.int_of_string}. *)
 
-  val nativeint_of_string : string -> (nativeint, msg) result
+  val nativeint_of_string : string -> (nativeint, [> msg]) result
   (** See {!Nativeint.of_string}. *)
 
-  val int32_of_string : string -> (int32, msg) result
+  val int32_of_string : string -> (int32, [> msg]) result
   (** See {!Int32.of_string}. *)
 
-  val int64_of_string : string -> (int64, msg) result
+  val int64_of_string : string -> (int64, [> msg]) result
   (** See {!Int64.of_string}. *)
 
-  val float_of_string : string -> (float, msg) result
+  val float_of_string : string -> (float, [> msg]) result
   (** See {!Pervasives.float_of_string}. *)
 
   (** {1 Handling unexpected exceptions}
