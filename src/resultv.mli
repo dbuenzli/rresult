@@ -147,13 +147,23 @@ module R : sig
   (** [error_backtrace_to_msg r] converts exception backtrace errors in
       [r] to an error message. *)
 
-  (** {1 Predicates} *)
+  (** {1 Predicates and comparison} *)
 
   val is_ok : ('a, 'b) result -> bool
   (** [is_ok r] is [true] iff [r = Ok _]. *)
 
   val is_error : ('a, 'b) result -> bool
   (** [is_error r] is [true] iff [r = Error _]. *)
+
+  val equal : ok:('a -> 'a -> bool) -> error:('b -> 'b -> bool) ->
+    ('a, 'b) result -> ('a, 'b) result -> bool
+  (** [equal ~ok ~error r r'] tests [r] and [r'] for equality using [ok]
+      and [error]. *)
+
+  val compare : ok:('a -> 'a -> int) -> error:('b -> 'b -> int) ->
+    ('a, 'b) result -> ('a, 'b) result -> int
+  (** [compare ~ok ~error r r'] totally orders [r] and [r'] using [ok]
+      and [error]. *)
 
   (** {1 Converting} *)
 

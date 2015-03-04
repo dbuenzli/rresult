@@ -105,6 +105,17 @@ module R = struct
   let is_ok = function Ok _ -> true | Error _ -> false
   let is_error = function Ok _ -> false | Error _ -> true
 
+  let equal ~ok ~error r r' = match r, r' with
+  | Ok v, Ok v' -> ok v v'
+  | Error e, Error e' -> error e e'
+  | _ -> false
+
+  let compare ~ok ~error r r' = match r, r' with
+  | Ok v, Ok v' -> ok v v'
+  | Error v, Error v' -> error v v'
+  | Ok _, Error _ -> -1
+  | Error _, Ok _ -> 1
+
   (* Converting *)
 
   let to_option = function Ok v -> Some v | Error e -> None
