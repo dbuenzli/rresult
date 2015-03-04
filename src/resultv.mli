@@ -126,7 +126,28 @@ module R : sig
 
   val error_msg_to_invalid_arg : ('a, msg) result -> 'a
   (** [err_msg_to_invalid_arg r] is [v] if [r = Ok v] and
+
       @raise Invalid_argument with the error message otherwise. *)
+
+  (** {2 {!Pervasive} string conversion functions} *)
+
+  val bool_of_string : string -> (bool, msg) result
+  (** See {!Pervasives.bool_of_string}. *)
+
+  val int_of_string : string -> (int, msg) result
+  (** See {!Pervasives.int_of_string}. *)
+
+  val nativeint_of_string : string -> (nativeint, msg) result
+  (** See {!Nativeint.of_string}. *)
+
+  val int32_of_string : string -> (int32, msg) result
+  (** See {!Int32.of_string}. *)
+
+  val int64_of_string : string -> (int64, msg) result
+  (** See {!Int64.of_string}. *)
+
+  val float_of_string : string -> (float, msg) result
+  (** See {!Pervasives.float_of_string}. *)
 
   (** {1 Handling unexpected exceptions}
 
