@@ -10,7 +10,7 @@ exists_if = "resultv.cma"
 package "top" (
   description = "Resultv toplevel support"
   version = "%%VERSION%%"
-  requires = "compiler-libs.toplevel resultv"
+  requires = "resultv"
   archive(byte) = "resultv_top.cma"
   archive(byte, plugin) = "resultv_top.cma"
   archive(native) = "resultv_top.cmxa"
