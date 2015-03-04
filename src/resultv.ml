@@ -84,20 +84,6 @@ module R = struct
   | Ok v -> v
   | Error (`Msg m) -> invalid_arg m
 
-  (* Pervasives string conversion functions *)
-
-  let err_convert s k = error_msgf "%S not a string representation of %s" s k
-  let k_of_string f ks s = try Ok (f s) with Failure _ -> err_convert s ks
-
-  let int_of_string s = k_of_string Pervasives.int_of_string "int" s
-  let nativeint_of_string s = k_of_string Nativeint.of_string "nativeint" s
-  let int32_of_string s = k_of_string Int32.of_string "int32" s
-  let int64_of_string s = k_of_string Int64.of_string "int64" s
-  let float_of_string s = k_of_string float_of_string "float" s
-
-  let bool_of_string s = try Ok (bool_of_string s) with
-  | Invalid_argument _ (* sic *) -> err_convert s "bool"
-
   (* Handling exceptions *)
 
   type backtrace = [ `Backtrace of Printexc.raw_backtrace ]
@@ -131,6 +117,18 @@ module R = struct
 
   let ignore_error ~use = function Ok v -> v | Error _ -> use
   let kignore_error ~use = function Ok _ as r -> r | Error _ -> use
+
+  (* Pervasives string conversion functions *)
+
+  let k_of_string f s = try Some (f s) with Failure _ -> None
+  let int_of_string s = k_of_string Pervasives.int_of_string s
+  let nativeint_of_string s = k_of_string Nativeint.of_string s
+  let int32_of_string s = k_of_string Int32.of_string s
+  let int64_of_string s = k_of_string Int64.of_string s
+  let float_of_string s = k_of_string float_of_string s
+  let bool_of_string s = try Some (bool_of_string s) with
+  | Invalid_argument _ (* sic *) -> None
+
 end
 
 (*---------------------------------------------------------------------------
