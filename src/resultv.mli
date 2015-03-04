@@ -160,8 +160,8 @@ module R : sig
   val to_option : ('a, 'b) result -> 'a option
   (** [to_option r] is [Some v] if [r = Ok v] and [None] otherwise. *)
 
-  val of_option : none:('a, 'b) result -> 'a option -> ('a, 'b) result
-  (** [of_option ~none r] is [Ok v] if [r = Some v] and [none] otherwise. *)
+  val of_option : none:(unit -> ('a, 'b) result) -> 'a option -> ('a, 'b) result
+  (** [of_option ~none r] is [Ok v] if [r = Some v] and [none ()] otherwise. *)
 
   val to_presult : ('a, 'b) result -> [> `Ok of 'a | `Error of 'b ]
   (** [to_presult r] is [r] as a polymorphic variant result value. *)
