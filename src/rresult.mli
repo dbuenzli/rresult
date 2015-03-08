@@ -253,7 +253,7 @@ end
 module Mod : sig
   type error = ...
   type 'a result = ('a, [`Mod of error]) Rresult.result
-  val pp_error : Format.formatter -> error -> unit
+  val pp_error : Format.formatter -> [`Mod of error] -> unit
   val open_error : 'a result -> ('a, [> `Mod of error]) Rresult.result
   val error_to_msg : 'a result -> ('a, Rresult.R.msg) Rresult.result
 
