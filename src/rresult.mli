@@ -263,11 +263,11 @@ end
 
 If your library has generic errors that may be useful in other context
 or shared among modules and to be composed together, then define your
-error type itself as being a variant and returns these values
+error type itself as being a variant and return these values
 without tagging them.
 {[
 module Mod : sig
-  type error = [`Generic of ... ]
+  type error = [`Generic of ... | ... ]
   type 'a result = ('a, error) Rresult.result
   val pp_error : Format.formatter -> error -> unit
   val open_error : 'a result -> ('a, [> error]) Rresult.result
@@ -280,7 +280,7 @@ In the latter case it may still be useful to provide a function to
 tag these errors whenever they reach a certain point of the program.
 For this the following function could be added to [Mod]:
 {[
-val pack_error : 'a result ->  ('a, [> `Msg of error]) Rresult.result
+val pack_error : 'a result ->  ('a, [> `Mod of error]) Rresult.result
 ]}
 *)
 
