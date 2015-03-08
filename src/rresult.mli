@@ -11,6 +11,8 @@
     exceptions. It defines a {!result} type and {{!R}combinators}
     to operate on these values.
 
+    Consult {{!usage}usage guidelines} for the type.
+
     Open the module to use it, this defines only one type and a module
     in your scope. To directly bring the {!R.Infix} operators in scope
     open {!Rresult_infix} instead.
@@ -92,7 +94,7 @@ module R : sig
     (** [(>>|)] is {!R.( >>| )}. *)
   end
 
-  (** {1 Error messages} *)
+  (** {1:msgs Error messages} *)
 
   type msg = [ `Msg of string ]
   (** The type for (error) messages. *)
@@ -133,7 +135,7 @@ module R : sig
   (** [open_error_msg r] allows to combine a closed error message
       variant with other variants. *)
 
-  (** {1 Handling unexpected exceptions}
+  (** {1:exn Handling unexpected exceptions}
 
       {e Getting rid of [null] was not enough}. *)
 
@@ -156,7 +158,7 @@ module R : sig
   (** [open_error_backtrace r] allows to combine a closed backtrace error
       variant with other variants. *)
 
-  (** {1 Predicates and comparison} *)
+  (** {1:pred Predicates and comparison} *)
 
   val is_ok : ('a, 'b) result -> bool
   (** [is_ok r] is [true] iff [r = Ok _]. *)
@@ -174,7 +176,7 @@ module R : sig
   (** [compare ~ok ~error r r'] totally orders [r] and [r'] using [ok]
       and [error]. *)
 
-  (** {1 Converting} *)
+  (** {1:convert Converting} *)
 
   val to_option : ('a, 'b) result -> 'a option
   (** [to_option r] is [Some v] if [r = Ok v] and [None] otherwise. *)
@@ -188,7 +190,7 @@ module R : sig
   val of_presult : [< `Ok of 'a | `Error of 'b ] -> ('a, 'b) result
   (** [of_presult pr] is [pr] as a result value. *)
 
-  (** {1 Ignoring errors}
+  (** {1:ignore Ignoring errors}
 
       {b Warning.} Using these functions is, most of the time, a bad idea. *)
 
@@ -198,7 +200,7 @@ module R : sig
   val kignore_error : use:('a, 'c) result -> ('a, 'b) result -> ('a, 'c) result
   (** [kignore_error ~use r] if [r] if [r = Ok v] and [use] otherwise. *)
 
-  (** {1 {!Pervasives} string conversion functions}
+  (** {1:type_of_string {!Pervasives} string conversion functions}
 
       These function return options instead of raising
       exceptions. This allows to easily use them in conjunction with
@@ -222,6 +224,65 @@ module R : sig
   val float_of_string : string -> float option
   (** See {!Pervasives.float_of_string}. *)
 end
+
+(** {1:usage Usage design guidelines}
+
+    These are rough design guidelines, don't forget to think.
+
+    {2 Error messages}
+
+    Use {{!R.msgs}error messages} if:
+    {ol
+    {- Your error messages don't need to be localized, e.g. scripts,
+       command line programs.}
+    {- The errors don't need to be processed. They are just meant to
+       be logged at certain point in your program.}}
+
+    If the above doesn't hold and your errors need to be processed for
+    localization or error recovery then use a custom error type in your
+    result values.
+
+    {2 Custom error types}
+
+    If your module has specific errors then define an error type, and
+    a result type that tags this error type with the library name (or
+    any other tag that may make sense, see for example {!R.exn}) along
+    with the following functions:
+
+{[
+module Mod : sig
+  type error = ...
+  type 'a result = ('a, [`Mod of error]) Rresult.result
+  val pp_error : Format.formatter -> error -> unit
+  val open_error : 'a result -> ('a, [> `Mod of error]) Rresult.result
+  val error_to_msg : 'a result -> ('a, Rresult.R.msg) Rresult.result
+
+  val f : ... -> 'a result
+end
+]}
+
+If your library has generic errors that may be useful in other context
+or shared among modules and to be composed together, then define your
+error type itself as being a variant and returns these values
+without tagging them.
+{[
+module Mod : sig
+  type error = [`Generic of ... ]
+  type 'a result = ('a, error) Rresult.result
+  val pp_error : Format.formatter -> error -> unit
+  val open_error : 'a result -> ('a, [> error]) Rresult.result
+  val error_to_msg : 'a result -> ('a, Rresult.R.msg) Rresult.result
+
+  val f : ... -> 'a result
+end
+]}
+In the latter case it may still be useful to provide a function to
+tag these errors whenever they reach a certain point of the program.
+For this the following function could be added to [Mod]:
+{[
+val pack_error : 'a result ->  ('a, [> `Msg of error]) Rresult.result
+]}
+*)
 
 (*---------------------------------------------------------------------------
    Copyright 2014 Daniel C. Bünzli.
