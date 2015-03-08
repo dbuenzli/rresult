@@ -121,10 +121,10 @@ module R : sig
       if [replace] is [false] (default), the result of [reword old_msg] is
       concatened, on a new line to the old message. *)
 
-  val error_to_msg : pp:(Format.formatter -> 'b -> unit) ->
+  val error_to_msg : pp_error:(Format.formatter -> 'b -> unit) ->
     ('a, 'b) result -> ('a, [> msg]) result
-  (** [error_to_msg pp r] converts errors in [r] with [pp] to an error
-      message. *)
+  (** [error_to_msg pp_error r] converts errors in [r] with [pp_error] to
+      an error message. *)
 
   val error_msg_to_invalid_arg : ('a, msg) result -> 'a
   (** [err_msg_to_invalid_arg r] is [v] if [r = Ok v] and

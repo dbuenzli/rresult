@@ -75,9 +75,9 @@ module R = struct
       let (`Msg e' as v) = reword e in
       if replace then Error v else error_msgf "%s\n%s" e e'
 
-  let error_to_msg ~pp = function
+  let error_to_msg ~pp_error = function
   | Ok _ as r -> r
-  | Error e -> error_msgf "%a" pp e
+  | Error e -> error_msgf "%a" pp_error e
 
   let error_msg_to_invalid_arg = function
   | Ok v -> v
