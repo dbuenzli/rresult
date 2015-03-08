@@ -282,6 +282,16 @@ For this the following function could be added to [Mod]:
 {[
 val pack_error : 'a result ->  ('a, [> `Mod of error]) Rresult.result
 ]}
+You should then provide the following functions aswell, to that
+the packed error composes well in the system:
+{[
+val pp_pack_error : Format.formatter -> [ `Mod of error] -> unit
+val open_pack_error :  ('a, [ `Mod of error]) Rresult.result ->
+  ('a, [> `Mod of error]) Rresult.result
+
+val error_pack_to_msg : ('a, [ `Mod of error]) Rresult.result ->
+  ('a, Rresult.R.msg) Rresult.result
+]}
 *)
 
 (*---------------------------------------------------------------------------
