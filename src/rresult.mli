@@ -135,27 +135,26 @@ module R : sig
   (** [open_error_msg r] allows to combine a closed error message
       variant with other variants. *)
 
-  (** {1:exn Handling unexpected exceptions}
+  (** {1:exn Trapping unexpected exceptions}
 
       {e Getting rid of [null] was not enough}. *)
 
-  type backtrace = [ `Backtrace of Printexc.raw_backtrace ]
-  (** The type for exception backtraces. *)
+  type exn_trap = [ `Exn_trap of exn * Printexc.raw_backtrace ]
+  (** The type for exception traps. *)
 
-  val pp_backtrace : Format.formatter -> backtrace -> unit
-  (** [pp_backtrace ppf bt] prints [bt] on [ppf]. *)
+  val pp_exn_trap : Format.formatter -> exn_trap -> unit
+  (** [pp_exn_trap ppf bt] prints [bt] on [ppf]. *)
 
-  val trap_exn : ('a -> 'b) -> 'a -> ('b, [> backtrace]) result
-  (** [trap_exn f v] is [f v] and traps any exception that may
-      occur as an exception backtrace error. *)
+  val trap_exn : ('a -> 'b) -> 'a -> ('b, [> exn_trap]) result
+  (** [trap_exn f v] is [f v] and traps any exception that may occur as
+      an exception trap error. *)
 
-  val error_backtrace_to_msg : ('a, backtrace) result -> ('a, [> msg]) result
-  (** [error_backtrace_to_msg r] converts exception backtrace errors in
+  val error_exn_trap_to_msg : ('a, exn_trap) result -> ('a, [> msg]) result
+  (** [error_exn_trap_to_msg r] converts exception trap errors in
       [r] to an error message. *)
 
-  val open_error_backtrace : ('a, backtrace) result ->
-    ('a, [> backtrace]) result
-  (** [open_error_backtrace r] allows to combine a closed backtrace error
+  val open_error_exn_trap : ('a, exn_trap) result -> ('a, [> exn_trap]) result
+  (** [open_error_exn_trap r] allows to combine a closed exception trap error
       variant with other variants. *)
 
   (** {1:pred Predicates and comparison} *)

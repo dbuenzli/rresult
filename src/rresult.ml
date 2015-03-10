@@ -83,27 +83,27 @@ module R = struct
   | Ok v -> v
   | Error (`Msg m) -> invalid_arg m
 
-  let open_error_msg = function Ok _ as r -> r | Error (`Msg m) as r -> r
+  let open_error_msg = function Ok _ as r -> r | Error (`Msg _) as r -> r
 
-  (* Handling exceptions *)
+  (* Trapping unexpected exceptions *)
 
-  type backtrace = [ `Backtrace of Printexc.raw_backtrace ]
-  let pp_backtrace ppf (`Backtrace e) =
-    pp_lines ppf (Printexc.raw_backtrace_to_string e)
+  type exn_trap = [ `Exn_trap of exn * Printexc.raw_backtrace ]
+  let pp_exn_trap ppf (`Exn_trap (exn, bt)) =
+    Format.fprintf ppf "%s@\n" (Printexc.to_string exn);
+    pp_lines ppf (Printexc.raw_backtrace_to_string bt)
 
   let trap_exn f v = try Ok (f v) with
   | e ->
       let bt = Printexc.get_raw_backtrace () in
-      Error (`Backtrace bt)
+      Error (`Exn_trap (e, bt))
 
-  let error_backtrace_to_msg = function
+  let error_exn_trap_to_msg = function
   | Ok _ as r -> r
-  | Error (`Backtrace bt) ->
-      let bt = Printexc.raw_backtrace_to_string bt in
-      error_msgf "Unexpected exception:\n%s" bt
+  | Error trap ->
+      error_msgf "Unexpected exception:@\n%a" pp_exn_trap trap
 
-  let open_error_backtrace = function
-  | Ok _ as r -> r | Error (`Backtrace m) as r -> r
+  let open_error_exn_trap = function
+  | Ok _ as r -> r | Error (`Exn_trap _) as r -> r
 
   (* Predicates *)
 
