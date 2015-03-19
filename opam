@@ -8,6 +8,7 @@ bug-reports: "https://github.com/dbuenzli/rresult/issues"
 tags: [ "result" "error" "declarative" "org:erratique" ]
 license: "BSD3"
 available: [ ocaml-version >= "4.01.0"]
+depends: ["ocamlfind"]
 build:
 [
   [ "ocaml" "pkg/git.ml" ]
