@@ -17,6 +17,8 @@
     in your scope. To directly bring the {!R.Infix} operators in scope
     open {!Rresult_infix} instead.
 
+    {b WARNING.} This interface is subject to change in the future.
+
     {e Release %%VERSION%% - %%MAINTAINER%% } *)
 
 (** {1 Results} *)
