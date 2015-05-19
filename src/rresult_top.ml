@@ -10,7 +10,7 @@ let exec s =
   assert(Toploop.execute_phrase false Format.err_formatter ph)
 
 let setup () =
-  exec "open Rresult_infix;;";
+  exec "open Rresult;;";
   ()
 
 let () = setup ()
