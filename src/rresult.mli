@@ -13,9 +13,8 @@
 
     Consult {{!usage}usage guidelines} for the type.
 
-    Open the module to use it, this defines only one type and a module
-    in your scope. To directly bring the {!R.Infix} operators in scope
-    open {!Rresult_infix} instead.
+    Open the module to use it, this defines the {{!result}result type},
+    the {!R.Infix} operators {!R} in your scope.
 
     {b WARNING.} This interface is subject to change in the future.
 
@@ -25,6 +24,12 @@
 
 (** The type for results. *)
 type ('a, 'b) result = Ok of 'a | Error of 'b
+
+val ( >>= ) : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
+(** [(>>=)] is {!R.( >>= )}. *)
+
+val ( >>| ) : ('a, 'b) result -> ('a -> 'c) -> ('c, 'b) result
+(** [(>>|)] is {!R.( >>| )}. *)
 
 (** Result value combinators. *)
 module R : sig

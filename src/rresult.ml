@@ -146,6 +146,8 @@ module R = struct
 
 end
 
+include R.Infix
+
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli.
    All rights reserved.
