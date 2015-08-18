@@ -72,7 +72,7 @@ module R : sig
 
   (** {1 Composing results} *)
 
-  val bind : ('a, 'b) result -> ('a -> ('a, 'b) result) -> ('a, 'b) result
+  val bind : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
   (** [bind r f] is [f v] if [r = Ok v] and [r] if [r = Error _]. *)
 
   val map : ('a, 'b) result -> ('a -> 'c) -> ('c, 'b) result
