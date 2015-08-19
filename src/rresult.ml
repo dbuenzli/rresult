@@ -132,18 +132,6 @@ module R = struct
 
   let ignore_error ~use = function Ok v -> v | Error _ -> use
   let kignore_error ~use = function Ok _ as r -> r | Error _ -> use
-
-  (* Pervasives string conversion functions *)
-
-  let k_of_string f s = try Some (f s) with Failure _ -> None
-  let int_of_string s = k_of_string Pervasives.int_of_string s
-  let nativeint_of_string s = k_of_string Nativeint.of_string s
-  let int32_of_string s = k_of_string Int32.of_string s
-  let int64_of_string s = k_of_string Int64.of_string s
-  let float_of_string s = k_of_string float_of_string s
-  let bool_of_string s = try Some (bool_of_string s) with
-  | Invalid_argument _ (* sic *) -> None
-
 end
 
 include R.Infix

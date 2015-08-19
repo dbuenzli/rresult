@@ -205,30 +205,6 @@ module R : sig
 
   val kignore_error : use:('a, 'c) result -> ('a, 'b) result -> ('a, 'c) result
   (** [kignore_error ~use r] if [r] if [r = Ok v] and [use] otherwise. *)
-
-  (** {1:type_of_string {!Pervasives} string conversion functions}
-
-      These function return options instead of raising
-      exceptions. This allows to easily use them in conjunction with
-      {!of_option}. *)
-
-  val bool_of_string : string -> bool option
-  (** See {!Pervasives.bool_of_string}. *)
-
-  val int_of_string : string -> int option
-  (** See {!Pervasives.int_of_string}. *)
-
-  val nativeint_of_string : string -> nativeint option
-  (** See {!Nativeint.of_string}. *)
-
-  val int32_of_string : string -> int32 option
-  (** See {!Int32.of_string}. *)
-
-  val int64_of_string : string -> int64 option
-  (** See {!Int64.of_string}. *)
-
-  val float_of_string : string -> float option
-  (** See {!Pervasives.float_of_string}. *)
 end
 
 (** {1:usage Usage design guidelines}
