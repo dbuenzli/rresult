@@ -204,7 +204,7 @@ module R : sig
   (** [ignore_error ~use r] is [v] if [r = Ok v] and [use] otherwise. *)
 
   val kignore_error : use:('a, 'c) result -> ('a, 'b) result -> ('a, 'c) result
-  (** [kignore_error ~use r] if [r] if [r = Ok v] and [use] otherwise. *)
+  (** [kignore_error ~use r] is [r] if [r = Ok v] and [use] otherwise. *)
 end
 
 (** {1:usage Usage design guidelines}
