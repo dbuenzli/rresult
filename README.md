@@ -4,10 +4,11 @@ Release %%VERSION%%
 
 Rresult is an OCaml module for handling computation results and errors
 in an explicit and declarative manner, without resorting to
-exceptions. It defines a result type and combinators to operate on
-these values.
+exceptions. It defines combinators to operate on the `result` type
+available from OCaml 4.03 in the standard library.
 
-Rresult has no dependency and is distributed under the BSD3 license.
+Rresult depends on the compatibility `result` package and is
+distributed under the BSD3 license.
 
 Home page: http://erratique.ch/software/rresult  
 Contact: Daniel Bünzli `<daniel.buenzl i@erratique.ch>`

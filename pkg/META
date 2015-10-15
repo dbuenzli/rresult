@@ -1,6 +1,7 @@
 description = "Result value combinators for OCaml"
 version = "%%VERSION%%"
 
+requires = "result"
 archive(byte) = "rresult.cma"
 archive(byte, plugin) = "rresult.cma"
 archive(native) = "rresult.cmxa"
@@ -15,5 +16,5 @@ package "top" (
   archive(byte, plugin) = "rresult_top.cma"
   archive(native) = "rresult_top.cmxa"
   archive(native, plugin) = "rresult_top.cmxs"
-  exists_if = "rresult_top.cma"        
+  exists_if = "rresult_top.cma"
 )

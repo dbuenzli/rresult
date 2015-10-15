@@ -23,7 +23,8 @@
 (** {1 Results} *)
 
 (** The type for results. *)
-type ('a, 'b) result = Ok of 'a | Error of 'b
+
+type ('a, 'b) result = ('a, 'b) Result.result = Ok of 'a | Error of 'b
 
 val ( >>= ) : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
 (** [(>>=)] is {!R.( >>= )}. *)

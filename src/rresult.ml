@@ -4,7 +4,7 @@
    %%NAME%% release %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-type ('a, 'b) result = Ok of 'a | Error of 'b
+type ('a, 'b) result = ('a, 'b) Result.result = Ok of 'a | Error of 'b
 
 module R = struct
 
