@@ -37,6 +37,8 @@ module R : sig
 
   (** {1 Results} *)
 
+  open Result
+
   type ('a, 'b) t = ('a, 'b) result
   (** The type for results. *)
 
