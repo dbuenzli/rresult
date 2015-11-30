@@ -26,6 +26,8 @@
 
 type ('a, 'b) result = ('a, 'b) Result.result = Ok of 'a | Error of 'b
 
+open Result
+
 val ( >>= ) : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
 (** [(>>=)] is {!R.( >>= )}. *)
 
@@ -36,8 +38,6 @@ val ( >>| ) : ('a, 'b) result -> ('a -> 'c) -> ('c, 'b) result
 module R : sig
 
   (** {1 Results} *)
-
-  open Result
 
   type ('a, 'b) t = ('a, 'b) result
   (** The type for results. *)
