@@ -35,7 +35,7 @@ module R = struct
   let map f v = match v with Ok v -> Ok (f v) | Error _ as e -> e
   let join r = match r with Ok v -> v | Error _ as e -> e
   let ( >>= ) = bind
-  let ( >>| ) = map
+  let ( >>| ) v f = match v with Ok v -> Ok (f v) | Error _ as e -> e
 
   module Infix = struct
     let ( >>= ) = ( >>= )
