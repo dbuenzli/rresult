@@ -78,8 +78,8 @@ module R : sig
   val bind : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
   (** [bind r f] is [f v] if [r = Ok v] and [r] if [r = Error _]. *)
 
-  val map : ('a, 'b) result -> ('a -> 'c) -> ('c, 'b) result
-  (** [map r f] is [bind r (fun v -> ret (f v))]. *)
+  val map : ('a -> 'c) -> ('a, 'b) result -> ('c, 'b) result
+  (** [map f r] is [bind (fun v -> ret (f v))] r. *)
 
   val join : (('a, 'b) result, 'b) result -> ('a, 'b) result
   (** [join r] is [v] if [r = Ok v] and [r] otherwise. *)
