@@ -3,7 +3,7 @@
 #use "topkg.ml";;
 
 let () =
-  Pkg.describe "rresult" ~builder:`OCamlbuild [
+  Pkg.describe "rresult" ~builder:(`OCamlbuild []) [
     Pkg.lib "pkg/META";
     Pkg.lib ~exts:Exts.module_library "src/rresult";
     Pkg.lib ~exts:Exts.library "src/rresult_top";
