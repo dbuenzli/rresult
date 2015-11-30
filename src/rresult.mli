@@ -8,13 +8,13 @@
 
     [Rresult] is a module for handling computation results and errors
     in an explicit and declarative manner without resorting to
-    exceptions. It defines a {!result} type and {{!R}combinators}
-    to operate on these values.
-
-    Consult {{!usage}usage guidelines} for the type.
+    exceptions. It defines a {!result} type equal to OCaml 4.03's
+    [result] type and {{!R}combinators} to operate on these values.
 
     Open the module to use it, this defines the {{!result}result type},
     the {!R.Infix} operators {!R} in your scope.
+
+    Consult {{!usage}usage guidelines} for the type.
 
     {b WARNING.} This interface is subject to change in the future.
 
@@ -23,7 +23,6 @@
 (** {1 Results} *)
 
 (** The type for results. *)
-
 type ('a, 'b) result = ('a, 'b) Result.result = Ok of 'a | Error of 'b
 
 open Result
