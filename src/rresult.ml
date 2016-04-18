@@ -105,8 +105,8 @@ module R = struct
 
   let pp ~ok ~error ppf = function Ok v -> ok ppf v | Error e -> error ppf e
   let dump ~ok ~error ppf = function
-  | Ok v -> Format.fprintf ppf "@[Ok @[%a@]@]" ok v
-  | Error e -> Format.fprintf ppf "@[Error @[%a@]@]" error e
+  | Ok v -> Format.fprintf ppf "@[<2>Ok@ @[%a@]@]" ok v
+  | Error e -> Format.fprintf ppf "@[<2>Error@ @[%a@]@]" error e
 
   (* Predicates *)
 
