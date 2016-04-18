@@ -22,10 +22,6 @@ module R = struct
   | Ok _ as r -> r
   | Error e -> Error (reword e)
 
-  let pp ~pp_ok ~pp_error ppf = function
-  | Ok v -> Format.fprintf ppf "@[Ok %a@]" pp_ok v
-  | Error e -> Format.fprintf ppf "@[Error %a@]" pp_error e
-
   let return = ok
   let fail = error
 
@@ -104,6 +100,13 @@ module R = struct
 
   let open_error_exn_trap = function
   | Ok _ as r -> r | Error (`Exn_trap _) as r -> r
+
+  (* Pretty-printing *)
+
+  let pp ~ok ~error ppf = function Ok v -> ok ppf v | Error e -> error ppf e
+  let dump ~ok ~error ppf = function
+  | Ok v -> Format.fprintf ppf "@[Ok @[%a@]@]" ok v
+  | Error e -> Format.fprintf ppf "@[Error @[%a@]@]" error e
 
   (* Predicates *)
 

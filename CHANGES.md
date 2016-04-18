@@ -1,3 +1,7 @@
+
+* `R.pp` remove the `pp_` prefix from the label name and do not print
+   the constructors names, use to the newly introduced `R.dump` for this.
+
 v0.3.0 2015-11-30 Cambridge (UK)
 --------------------------------
 

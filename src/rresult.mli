@@ -60,13 +60,6 @@ module R : sig
   (** [get_error r] is [e] if [r = Error e] and @raise Invalid_argument
       otherwise. *)
 
-  val pp :
-    pp_ok:(Format.formatter -> 'a -> unit) ->
-    pp_error:(Format.formatter -> 'b -> unit) -> Format.formatter ->
-    ('a, 'b) result -> unit
-  (** [pp pp_ok pp_error ppf r] prints [r] on [ppf] using [pp_ok] and
-      [pp_error]. *)
-
   (**/**)
   val return : 'a -> ('a, 'b) result
   val fail : 'b -> ('a, 'b) result
@@ -165,6 +158,22 @@ module R : sig
   val open_error_exn_trap : ('a, exn_trap) result -> ('a, [> exn_trap]) result
   (** [open_error_exn_trap r] allows to combine a closed exception trap error
       variant with other variants. *)
+
+  (** {1:print Pretty printing} *)
+
+  val pp :
+    ok:(Format.formatter -> 'a -> unit) ->
+    error:(Format.formatter -> 'b -> unit) -> Format.formatter ->
+    ('a, 'b) result -> unit
+  (** [pp ok error ppf r] prints [r] on [ppf] using [ok] and [error] according
+      to [r]. *)
+
+  val dump :
+    ok:(Format.formatter -> 'a -> unit) ->
+    error:(Format.formatter -> 'b -> unit) -> Format.formatter ->
+    ('a, 'b) result -> unit
+  (** [dump ~ok ~error] formats an OCaml result value using [ok] or [error]
+      according to case, no parentheses are added. *)
 
   (** {1:pred Predicates and comparison} *)
 
