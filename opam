@@ -10,11 +10,10 @@ license: "ISC"
 available: [ ocaml-version >= "4.01.0"]
 depends: [
    "ocamlfind" {build}
+   "ocamlbuild" {build}
+   "topkg" {build}
    "result"
 ]
-build:
-[
-  [ "ocaml" "pkg/git.ml" ]
-  [ "ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
-                           "native-dynlink=%{ocaml-native-dynlink}%"]
-]
+build:[[
+  "ocaml" "pkg/pkg.ml" "build"
+          "--installer" "true" ]]

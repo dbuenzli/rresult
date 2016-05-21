@@ -1,20 +1,17 @@
 description = "Result value combinators for OCaml"
 version = "%%VERSION%%"
-
 requires = "result"
 archive(byte) = "rresult.cma"
-archive(byte, plugin) = "rresult.cma"
 archive(native) = "rresult.cmxa"
-archive(native, plugin) = "rresult.cmxs"
-exists_if = "rresult.cma"
+plugin(byte) = "rresult.cma"
+plugin(native) = "rresult.cmxs"
 
 package "top" (
   description = "Rresult toplevel support"
   version = "%%VERSION%%"
   requires = "rresult"
   archive(byte) = "rresult_top.cma"
-  archive(byte, plugin) = "rresult_top.cma"
   archive(native) = "rresult_top.cmxa"
-  archive(native, plugin) = "rresult_top.cmxs"
-  exists_if = "rresult_top.cma"
+  plugin(byte) = "rresult_top.cma"
+  plugin(native) = "rresult_top.cmxs"
 )
