@@ -1,8 +1,12 @@
 
+v0.4.0 2016-05-23 La Forclaz (VS)
+---------------------------------
+
 * Build depend on topkg.
 * Relicense from BSD3 to ISC.
-* `R.pp` remove the `pp_` prefix from the label name and do not print
-   the constructors names, use to the newly introduced `R.dump` for this.
+* `R.pp` remove the `pp_` prefix from the labels and do not print the
+   constructors names, use to the newly introduced `R.dump` for this.
+   This follows the conventions of `Fmt`.
 
 v0.3.0 2015-11-30 Cambridge (UK)
 --------------------------------
