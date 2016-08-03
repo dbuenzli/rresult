@@ -28,13 +28,16 @@ module R = struct
   (* Composing results *)
 
   let bind v f = match v with Ok v -> f v | Error _ as e -> e
+  let tee v f = match v with Ok w -> begin match f w with Ok _ -> v | Error _ as e -> e end | Error _ as e -> e
   let map f v = match v with Ok v -> Ok (f v) | Error _ as e -> e
   let join r = match r with Ok v -> v | Error _ as e -> e
   let ( >>= ) = bind
+  let ( >>@ ) = tee
   let ( >>| ) v f = match v with Ok v -> Ok (f v) | Error _ as e -> e
 
   module Infix = struct
     let ( >>= ) = ( >>= )
+    let ( >>@ ) = ( >>@ )
     let ( >>| ) = ( >>| )
   end
 

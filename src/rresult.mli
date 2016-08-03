@@ -70,6 +70,9 @@ module R : sig
   val bind : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
   (** [bind r f] is [f v] if [r = Ok v] and [r] if [r = Error _]. *)
 
+  val tee : ('a, 'b) result -> ('a -> (_, 'b) result) -> ('a, 'b) result
+  (** [tee r f] is [f v] if [r = Ok v] and [f v = Error _]; otherwise it is r. *)
+
   val map : ('a -> 'c) -> ('a, 'b) result -> ('c, 'b) result
   (** [map f r] is [bind (fun v -> ret (f v))] r. *)
 
@@ -78,6 +81,9 @@ module R : sig
 
   val ( >>= ) : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
   (** [r >>= f] is {!bind}[ r f]. *)
+
+  val ( >>@ ) : ('a, 'b) result -> ('a -> (_, 'b) result) -> ('a, 'b) result
+  (** [r >>@ f] is {!tee}[ r f]. *)
 
   val ( >>| ) : ('a, 'b) result -> ('a -> 'c) -> ('c, 'b) result
   (** [r >>| f] is {!map}[ r f]. *)
@@ -91,6 +97,9 @@ module R : sig
 
     val ( >>= ) : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
     (** [(>>=)] is {!R.( >>= )}. *)
+
+    val ( >>@ ) : ('a, 'b) result -> ('a -> (_, 'b) result) -> ('a, 'b) result
+    (** [r >>@ f] is {!R.( >>@ )}. *)
 
     val ( >>| ) : ('a, 'b) result -> ('a -> 'c) -> ('c, 'b) result
     (** [(>>|)] is {!R.( >>| )}. *)
