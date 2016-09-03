@@ -16,8 +16,6 @@
 
     Consult {{!usage}usage guidelines} for the type.
 
-    {b WARNING.} This interface is subject to change in the future.
-
     {e %%VERSION%% - {{:%%PKG_HOMEPAGE%% }homepage}} *)
 
 (** {1 Results} *)
