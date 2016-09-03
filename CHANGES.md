@@ -1,4 +1,11 @@
 
+v0.5.0 2016-09-03 Zagreb
+------------------------
+
+* `R.[k]ignore_error` use a thunk for the `~use` argument.  This is an
+   incompatible change. Simply wrap occurences of `~use:e` with
+   `~use:(fun _ -> e)`.
+
 v0.4.0 2016-05-23 La Forclaz (VS)
 ---------------------------------
 
