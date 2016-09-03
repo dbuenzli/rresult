@@ -211,11 +211,14 @@ module R : sig
 
       {b Warning.} Using these functions is, most of the time, a bad idea. *)
 
-  val ignore_error : use:'a -> ('a, 'b) result -> 'a
-  (** [ignore_error ~use r] is [v] if [r = Ok v] and [use] otherwise. *)
+  val ignore_error : use:('b -> 'a) -> ('a, 'b) result -> 'a
+  (** [ignore_error ~use r] is [v] if [r = Ok v] and [use e] if
+      [r = Error e]. *)
 
-  val kignore_error : use:('a, 'c) result -> ('a, 'b) result -> ('a, 'c) result
-  (** [kignore_error ~use r] is [r] if [r = Ok v] and [use] otherwise. *)
+  val kignore_error :
+    use:('b -> ('a, 'c) result) -> ('a, 'b) result -> ('a, 'c) result
+    (** [kignore_error ~use r] is [r] if [r = Ok v] and [use e] if
+        [r = Error e]. *)
 end
 
 (** {1:usage Usage design guidelines}

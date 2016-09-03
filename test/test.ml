@@ -109,12 +109,12 @@ let test_converting () =
 
 let test_ignoring () =
   log "Test.[k]ignore_error";
-  assert (R.ignore_error ~use:3 (Ok 4) = 4);
-  assert (R.ignore_error ~use:3 (Error 4) = 3);
-  assert (R.kignore_error ~use:(Ok 3) (Ok 4) = (Ok 4));
-  assert (R.kignore_error ~use:(Ok 3) (Error 4) = (Ok 3));
-  assert (R.kignore_error ~use:(Error 3) (Ok 4) = (Ok 4));
-  assert (R.kignore_error ~use:(Error 3) (Error 4) = (Error 3));
+  assert (R.ignore_error ~use:(fun _ -> 3) (Ok 4) = 4);
+  assert (R.ignore_error ~use:(fun _ -> 3) (Error 4) = 3);
+  assert (R.kignore_error ~use:(fun _ -> Ok 3) (Ok 4) = (Ok 4));
+  assert (R.kignore_error ~use:(fun _ -> Ok 3) (Error 4) = (Ok 3));
+  assert (R.kignore_error ~use:(fun _ -> Error 3) (Ok 4) = (Ok 4));
+  assert (R.kignore_error ~use:(fun _ -> Error 3) (Error 4) = (Error 3));
   ()
 
 let tests () =

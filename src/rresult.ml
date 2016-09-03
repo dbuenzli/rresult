@@ -133,8 +133,8 @@ module R = struct
 
   (* Ignoring errors *)
 
-  let ignore_error ~use = function Ok v -> v | Error _ -> use
-  let kignore_error ~use = function Ok _ as r -> r | Error _ -> use
+  let ignore_error ~use = function Ok v -> v | Error e -> use e
+  let kignore_error ~use = function Ok _ as r -> r | Error e -> use e
 end
 
 include R.Infix
