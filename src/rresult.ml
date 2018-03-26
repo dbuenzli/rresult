@@ -80,6 +80,7 @@ module R = struct
   | Error (`Msg m) -> invalid_arg m
 
   let open_error_msg = function Ok _ as r -> r | Error (`Msg _) as r -> r
+  let failwith_error_msg = function Ok v -> v | Error (`Msg m) -> failwith m
 
   (* Trapping unexpected exceptions *)
 

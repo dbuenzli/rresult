@@ -135,6 +135,10 @@ module R : sig
   (** [open_error_msg r] allows to combine a closed error message
       variant with other variants. *)
 
+  val failwith_error_msg : ('a, msg) result -> 'a
+  (** [failwith_error_msg r] raises [Failure m] if [r] is
+      [Error (`Msg m)]. *)
+
   (** {1:exn Trapping unexpected exceptions}
 
       {e Getting rid of [null] was not enough}. *)

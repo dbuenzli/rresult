@@ -1,4 +1,7 @@
 
+
+* Add `R.failwith_error_msg`.
+
 v0.5.0 2016-09-03 Zagreb
 ------------------------
 
