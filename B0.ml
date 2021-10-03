@@ -21,7 +21,7 @@ let result_lib =
 let rresult_top =
   let srcs = Fpath.[ `File (v "src/rresult_top.ml") ] in
   let requires = [compiler_libs_toplevel] in
-  B0_ocaml.lib rresult_top ~doc:"The uunf.string library" ~srcs ~requires
+  B0_ocaml.lib rresult_top ~doc:"The rresult.top library" ~srcs ~requires
 
 (* Tests *)
 
