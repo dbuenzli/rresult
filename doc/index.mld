@@ -1,0 +1,5 @@
+{0 Rresult {%html: <span class="version">%%VERSION%%</span>%}}
+
+{!modules:
+Rresult
+}
