@@ -1,5 +1,5 @@
 (*---------------------------------------------------------------------------
-   Copyright (c) 2014 Daniel C. Bünzli. All rights reserved.
+   Copyright (c) 2014 The rresult programmers. All rights reserved.
    Distributed under the ISC license, see terms at the end of the file.
    %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*)
@@ -293,7 +293,7 @@ val error_pack_to_msg : ('a, [ `Mod of error]) Rresult.result ->
 *)
 
 (*---------------------------------------------------------------------------
-   Copyright (c) 2014 Daniel C. Bünzli
+   Copyright (c) 2014 The rresult programmers
 
    Permission to use, copy, modify, and/or distribute this software for any
    purpose with or without fee is hereby granted, provided that the above
