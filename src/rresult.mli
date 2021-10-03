@@ -5,8 +5,8 @@
 
 (** Result value combinators.
 
-    {b Note.} OCaml 4.08 provides the {!Stdlib.Result} module. You
-    are encouraged to use this module instead of [Rresult].
+    {b Note.} OCaml 4.08 provides the {!Stdlib.Result} module
+    which you should prefer to [Rresult].
 
     [Rresult] is a module for handling computation results and errors
     in an explicit and declarative manner without resorting to

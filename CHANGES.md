@@ -1,8 +1,9 @@
 
 
-
 * Require OCaml >= 4.08. This drops the dependency on the `result`
   compatibility package.
+* Users are encouraged to move the the `Stdlib.Result` module 
+  available in OCaml 4.08. 
 
 v0.6.0 2018-10-07 Zagreb
 ------------------------

@@ -7,8 +7,8 @@ in an explicit and declarative manner, without resorting to
 exceptions. It defines combinators to operate on the `result` type
 available from OCaml 4.03 in the standard library.
 
-OCaml 4.08 provides the `Stdlib.Result` module. You are encouraged to
-move to this module instead of using Rresult.
+OCaml 4.08 provides the `Stdlib.Result` module which you should prefer
+to Rresult.
 
 Rresult is distributed under the ISC license.
 
