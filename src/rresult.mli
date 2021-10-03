@@ -1,7 +1,6 @@
 (*---------------------------------------------------------------------------
    Copyright (c) 2014 The rresult programmers. All rights reserved.
    Distributed under the ISC license, see terms at the end of the file.
-   %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*)
 
 (** Result value combinators.
@@ -14,9 +13,7 @@
     Open the module to use it, this defines the {{!result}result type},
     the {!R.Infix} operators {!R} in your scope.
 
-    Consult {{!usage}usage guidelines} for the type.
-
-    {e %%VERSION%% - {{:%%PKG_HOMEPAGE%% }homepage}} *)
+    Consult {{!usage}usage guidelines} for the type. *)
 
 (** {1 Results} *)
 
