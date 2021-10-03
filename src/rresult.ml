@@ -3,7 +3,7 @@
    Distributed under the ISC license, see terms at the end of the file.
   ---------------------------------------------------------------------------*)
 
-type ('a, 'b) result = ('a, 'b) Result.result = Ok of 'a | Error of 'b
+type ('a, 'b) result = ('a, 'b) Stdlib.result = Ok of 'a | Error of 'b
 
 module R = struct
 

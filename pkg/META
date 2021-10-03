@@ -1,6 +1,6 @@
 description = "Result value combinators for OCaml"
 version = "%%VERSION_NUM%%"
-requires = "result"
+requires = ""
 archive(byte) = "rresult.cma"
 archive(native) = "rresult.cmxa"
 plugin(byte) = "rresult.cma"

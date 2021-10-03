@@ -13,14 +13,15 @@
     Open the module to use it, this defines the {{!result}result type},
     the {!R.Infix} operators {!R} in your scope.
 
-    Consult {{!usage}usage guidelines} for the type. *)
+    Consult {{!usage}usage guidelines} for the type.
+
+    {b Note.} OCaml 4.08 provides the {!Stdlib.Result} module. You
+    are encouraged to use this module instead of [Rresult]. *)
 
 (** {1 Results} *)
 
 (** The type for results. *)
-type ('a, 'b) result = ('a, 'b) Result.result = Ok of 'a | Error of 'b
-
-open Result
+type ('a, 'b) result = ('a, 'b) Stdlib.result = Ok of 'a | Error of 'b
 
 val ( >>= ) : ('a, 'b) result -> ('a -> ('c, 'b) result) -> ('c, 'b) result
 (** [(>>=)] is {!R.( >>= )}. *)

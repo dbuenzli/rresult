@@ -1,3 +1,9 @@
+
+
+
+* Require OCaml >= 4.08. This drops the dependency on the `result`
+  compatibility package.
+
 v0.6.0 2018-10-07 Zagreb
 ------------------------
 
