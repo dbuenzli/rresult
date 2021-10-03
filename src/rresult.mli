@@ -50,7 +50,8 @@ module R : sig
       {- [Error (reword e)] if [r = Error e]}} *)
 
   val get_ok : ('a, 'b) result -> 'a
-  (** [get r] is [v] if [r = Ok v] and raises [Invalid_argument] otherwise. *)
+  (** [get_ok r] is [v] if [r = Ok v] and raises [Invalid_argument]
+      otherwise. *)
 
   val get_error : ('a, 'b) result -> 'b
   (** [get_error r] is [e] if [r = Error e] and raises [Invalid_argument]
@@ -121,7 +122,7 @@ module R : sig
 
   val error_to_msg : pp_error:(Format.formatter -> 'b -> unit) ->
     ('a, 'b) result -> ('a, [> msg]) result
-  (** [error_to_msg pp_error r] converts errors in [r] with [pp_error] to
+  (** [error_to_msg ~pp_error r] converts errors in [r] with [pp_error] to
       an error message. *)
 
   val error_msg_to_invalid_arg : ('a, msg) result -> 'a
@@ -165,8 +166,8 @@ module R : sig
     ok:(Format.formatter -> 'a -> unit) ->
     error:(Format.formatter -> 'b -> unit) -> Format.formatter ->
     ('a, 'b) result -> unit
-  (** [pp ok error ppf r] prints [r] on [ppf] using [ok] and [error] according
-      to [r]. *)
+  (** [pp ~ok ~error ppf r] prints [r] on [ppf] using [ok] and [error]
+      according to [r]. *)
 
   val dump :
     ok:(Format.formatter -> 'a -> unit) ->
