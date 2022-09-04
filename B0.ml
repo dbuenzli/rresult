@@ -1,5 +1,4 @@
 open B0_kit.V000
-open B00_std
 open Result.Syntax
 
 (* OCaml library names *)
@@ -35,25 +34,25 @@ let test =
 
 let default =
   let meta =
-    let open B0_meta in
-    empty
-    |> tag B0_opam.tag
-    |> add authors ["The rresult programmers"]
-    |> add maintainers ["Daniel Bünzli <daniel.buenzl i@erratique.ch>"]
-    |> add homepage "https://erratique.ch/software/rresult"
-    |> add online_doc "https://erratique.ch/software/rresult/doc/Rresult"
-    |> add licenses ["ISC"]
-    |> add repo "git+https://erratique.ch/repos/rresult.git"
-    |> add issues "https://github.com/dbuenzli/rresult/issues"
-    |> add description_tags ["result"; "error"; "org:erratique"]
-    |> add B0_opam.Meta.build
+    B0_meta.empty
+    |> B0_meta.(add authors) ["The rresult programmers"]
+    |> B0_meta.(add maintainers)
+       ["Daniel Bünzli <daniel.buenzl i@erratique.ch>"]
+    |> B0_meta.(add homepage) "https://erratique.ch/software/rresult"
+    |> B0_meta.(add online_doc)
+      "https://erratique.ch/software/rresult/doc/Rresult"
+    |> B0_meta.(add licenses) ["ISC"]
+    |> B0_meta.(add repo) "git+https://erratique.ch/repos/rresult.git"
+    |> B0_meta.(add issues) "https://github.com/dbuenzli/rresult/issues"
+    |> B0_meta.(add description_tags) ["result"; "error"; "org:erratique"]
+    |> B0_meta.tag B0_opam.tag
+    |> B0_meta.add B0_opam.build
       {|[["ocaml" "pkg/pkg.ml" "build" "--dev-pkg" "%{dev}%"]]|}
-    |> add B0_opam.Meta.depends
+    |> B0_meta.add B0_opam.depends
       [ "ocaml", {|>= "4.08.0"|};
         "ocamlfind", {|build|};
         "ocamlbuild", {|build|};
-        "topkg", {|build & >= "1.0.3"|};
-      ]
+        "topkg", {|build & >= "1.0.3"|} ]
   in
-  B0_pack.v "default" ~doc:"rresult package" ~meta ~locked:true @@
+  B0_pack.make "default" ~doc:"rresult package" ~meta ~locked:true @@
   B0_unit.list ()
