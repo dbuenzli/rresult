@@ -52,7 +52,7 @@ let default =
       [ "ocaml", {|>= "4.08.0"|};
         "ocamlfind", {|build|};
         "ocamlbuild", {|build|};
-        "topkg", {|build & >= "1.0.3"|} ]
+        "topkg", {|build & >= "1.1.0"|} ]
   in
   B0_pack.make "default" ~doc:"rresult package" ~meta ~locked:true @@
   B0_unit.list ()
