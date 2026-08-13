@@ -12,20 +12,20 @@ let rresult_top = B0_ocaml.libname "rresult.top"
 
 let result_lib =
   let srcs =
-    Fpath.[ `File (v "src/rresult.mli"); `File (v "src/rresult.ml"); ]
+    Filepath.[ `File (v "src/rresult.mli"); `File (v "src/rresult.ml"); ]
   in
   let requires = [] in
   B0_ocaml.lib rresult ~doc:"The rresult library" ~srcs ~requires
 
 let rresult_top =
-  let srcs = Fpath.[ `File (v "src/rresult_top.ml") ] in
+  let srcs = Filepath.[ `File (v "src/rresult_top.ml") ] in
   let requires = [compiler_libs_toplevel] in
   B0_ocaml.lib rresult_top ~doc:"The rresult.top library" ~srcs ~requires
 
 (* Tests *)
 
 let test =
-  let srcs = Fpath.[`File (v "test/test.ml")] in
+  let srcs = Filepath.[`File (v "test/test.ml")] in
   let meta = B0_meta.(empty |> tag test) in
   let requires = [ rresult ] in
   B0_ocaml.exe "test" ~doc:"Test suite" ~srcs ~meta ~requires
